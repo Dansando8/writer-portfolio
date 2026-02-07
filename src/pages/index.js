@@ -51,8 +51,8 @@ const IndexPage = () => {
       {!ready ? (
         <div className="loaderOverlay" role="status" aria-live="polite">
           <div className="loaderInner">
-            <div className="loaderCaret" aria-hidden="true" />
-            <div className="loaderText">Loading</div>
+            <span className="loaderTextTyped">Loading</span>
+            <span className="loaderCaret" aria-hidden="true" />
           </div>
         </div>
       ) : null}
