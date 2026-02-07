@@ -1,59 +1,45 @@
 .contactBadge {
-  color: var(--brand-lilac);
-}
-
-.contactBadgeShape {
-  --contact-bg: rgb(40, 0, 62);
-  display: inline-grid;
-  justify-items: center;
-  gap: 0;
-  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.35));
-}
-
-.contactBubble {
-  background: var(--contact-bg);
-  border-radius: 12px;
-  padding: 6px 16px;
-  font-size: 18px;
-  line-height: 1.2;
+  background: rgba(40, 0, 62, 0.55);
+  -webkit-backdrop-filter: blur(14px) saturate(1.05);
+  backdrop-filter: blur(14px) saturate(1.05);
+  border-radius: 14px;
+  padding: 12px 18px;
   text-align: center;
-  width: fit-content;
+  font-size: 18px;
+  line-height: 1.25;
+  color: var(--brand-lilac);
+  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.35));
+  border: 1px solid rgba(203, 108, 230, 0.14);
 }
 
-/* Slight overlap to create a single connected "blob" silhouette. */
-.contactBubble + .contactBubble {
-  margin-top: -6px;
-}
-
-.contactBubbleTitle {
-  font-weight: 700;
-  font-size: 20px;
-  padding: 6px 18px;
-}
-
-.contactStem {
-  width: 26px;
-  height: 22px;
-  background: var(--contact-bg);
-  border-radius: 10px;
-  margin-top: -6px;
+.contactBadgeTitle {
+  display: block;
+  font-weight: 800;
+  font-size: 22px;
+  margin-bottom: 6px;
 }
 
 .contactBadge.isFloating {
   position: fixed;
-  right: 28px;
-  bottom: 22px;
+  right: 48px;
+  bottom: 52px;
   z-index: 10;
 }
 
 @media (max-width: 560px) {
-  .contactBubble {
+  .contactBadge {
     font-size: 16px;
   }
 
+  .contactBadgeTitle {
+    font-size: 20px;
+  }
+
   .contactBadge.isFloating {
-    left: 16px;
-    right: 16px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
     bottom: 16px;
+    max-width: calc(100vw - 32px);
   }
 }

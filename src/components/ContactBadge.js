@@ -1,19 +1,16 @@
 import * as React from "react"
 import "./ContactBadge.css"
 
-export default function ContactBadge({ floating = false }) {
+export default function ContactBadge({ floating = false, className = "" }) {
   return (
     <aside
-      className={`contactBadge ${floating ? "isFloating" : ""}`}
+      className={`contactBadge ${floating ? "isFloating" : ""} ${className}`}
       aria-label="Contact"
     >
-      <div className="contactBadgeShape">
-        <div className="contactBubble contactBubbleTitle">Contact</div>
-        <div className="contactBubble">Camares Amonat</div>
-        <div className="contactBubble">mails@gmail.com</div>
-        <div className="contactBubble">+49...phone_number</div>
-        <div className="contactStem" aria-hidden="true" />
-      </div>
+      <span className="contactBadgeTitle">Contact</span>
+      <div>Camares Amonat</div>
+      <div>test@gmail.com</div>
+      <div>+49...873982</div>
     </aside>
   )
 }

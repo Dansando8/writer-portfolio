@@ -80,6 +80,7 @@
 
 .heroMedia {
   z-index: 0;
+  pointer-events: none;
 }
 
 .heroImg {
@@ -97,6 +98,7 @@
 .heroTopBlur {
   /* Smooth top blur band like the PDF mock (soft fade, not a hard edge). */
   z-index: 1;
+  pointer-events: none;
   height: 260px;
   inset: 0 0 auto 0;
   background: rgba(70, 70, 74, 0.20);
@@ -124,6 +126,7 @@
   position: absolute;
   inset: 0;
   z-index: 2;
+  pointer-events: none;
   background: linear-gradient(
     180deg,
     rgba(40, 40, 44, 0.52) 0%,
@@ -175,13 +178,21 @@
   display: inline-block;
 }
 
-.contactWrap {
-  justify-self: end;
-  align-self: end;
-  margin-top: 36px;
+/* Keeps the headline centered higher (like when the contact card lived in flow). */
+.contactSpacer {
+  height: 140px;
 }
 
 @media (max-width: 560px) {
+  .contactSpacer {
+    height: 150px;
+  }
+
+  .name {
+    font-size: 76px;
+    line-height: 0.92;
+  }
+
   .heroTopBlur {
     height: 200px;
   }
@@ -189,11 +200,10 @@
   .tagline {
     border-radius: 14px;
     padding: 14px 16px;
+    font-size: 24px;
+    line-height: 1.12;
   }
 
-  .contactWrap {
-    width: 100%;
-  }
 }
 
 @media (max-width: 900px) {

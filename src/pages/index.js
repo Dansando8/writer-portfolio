@@ -12,6 +12,7 @@ import bg2400Webp from "../images/optimized/background_writing_machine-2400.webp
 const IndexPage = () => {
   const [ready, setReady] = React.useState(false)
   const [imgLoaded, setImgLoaded] = React.useState(false)
+  const [titleDone, setTitleDone] = React.useState(false)
 
   React.useEffect(() => {
     // Avoid an infinite loader if the image fails to load for any reason.
@@ -40,6 +41,10 @@ const IndexPage = () => {
       cancelled = true
     }
   }, [imgLoaded])
+
+  React.useEffect(() => {
+    if (!ready) setTitleDone(false)
+  }, [ready])
 
   return (
     <main className="hero">
@@ -80,22 +85,31 @@ const IndexPage = () => {
       <section className="content">
         <div className="headlineBlock">
           {ready ? (
-            <TypewriterTitle as="h1" className="name" text="Camares Amonat" />
+            <TypewriterTitle
+              as="h1"
+              className="name"
+              text="Camares Amonat"
+              onDone={() => setTitleDone(true)}
+            />
           ) : (
             <h1 className="name" style={{ visibility: "hidden" }}>
               Camares Amonat
             </h1>
           )}
-          <p className="tagline">
+          <p className={`tagline reveal ${titleDone ? "isVisible" : ""}`}>
             <span>Journalism, Copywriting</span>
             <br />
             <span>&amp; UX Writing</span>
           </p>
         </div>
 
-        <div className="contactWrap">
-          <ContactBadge />
-        </div>
+        {/* Spacer keeps the headline vertically positioned like the mock while the contact card floats. */}
+        <div className="contactSpacer" aria-hidden="true" />
+
+        <ContactBadge
+          floating
+          className={`reveal ${titleDone ? "isVisible" : ""}`}
+        />
       </section>
     </main>
   )
