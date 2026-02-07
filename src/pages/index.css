@@ -9,11 +9,12 @@
   position: fixed;
   inset: 0;
   z-index: 20;
+  /* Opaque background so hero content never shows through while loading. */
   background: radial-gradient(
     1200px 700px at 40% 40%,
-    rgba(54, 54, 58, 0.95) 0%,
-    rgba(20, 20, 22, 0.98) 55%,
-    rgba(12, 12, 14, 0.99) 100%
+    #36363a 0%,
+    #141416 55%,
+    #0c0c0e 100%
   );
   display: grid;
   place-items: center;
@@ -22,22 +23,42 @@
 .loaderInner {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   color: rgba(255, 255, 255, 0.82);
-  font-size: 16px;
-  letter-spacing: 0.12em;
+  font-size: clamp(22px, 2.6vw, 34px);
+  letter-spacing: 0.16em;
   text-transform: uppercase;
+}
+
+.loaderTextTyped {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  opacity: 0.9;
+  animation: loaderTyping 1500ms steps(7, end) infinite;
 }
 
 .loaderCaret {
   width: 0;
-  height: 20px;
-  border-left: 4px solid var(--brand-yellow);
+  height: 1.15em;
+  border-left: 5px solid var(--brand-yellow);
   animation: loaderBlink 900ms steps(1) infinite;
 }
 
-.loaderText {
-  opacity: 0.85;
+@keyframes loaderTyping {
+  0% {
+    width: 0;
+  }
+  40% {
+    width: 7ch;
+  }
+  70% {
+    width: 7ch;
+  }
+  100% {
+    width: 0;
+  }
 }
 
 @keyframes loaderBlink {
