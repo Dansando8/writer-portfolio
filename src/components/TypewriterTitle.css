@@ -1,0 +1,50 @@
+.tw {
+  position: relative;
+  display: inline-block;
+  white-space: pre-line;
+  /* Give the caret some breathing room so it doesn't trigger a wrap at the edge. */
+  padding-right: 0.25em;
+}
+
+/* Reserve layout so the title doesn't jump while typing. */
+.twGhost {
+  visibility: hidden;
+  white-space: pre-line;
+  padding-right: 0.25em;
+}
+
+.twText {
+  position: absolute;
+  inset: 0;
+  white-space: pre-line;
+  padding-right: 0.25em;
+}
+
+.twCursor {
+  display: inline-block;
+  /* Zero-width caret so it doesn't force a line wrap at the end of long titles. */
+  width: 0;
+  height: 0.9em;
+  margin-left: 0.08em;
+  border-left: 0.08em solid currentColor;
+  opacity: 0.75;
+  vertical-align: -0.08em;
+  animation: twBlink 1.05s steps(1) infinite;
+}
+
+@keyframes twBlink {
+  0%,
+  45% {
+    opacity: 0;
+  }
+  46%,
+  100% {
+    opacity: 0.75;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .twCursor {
+    display: none;
+  }
+}

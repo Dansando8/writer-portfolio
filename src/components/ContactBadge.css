@@ -1,0 +1,59 @@
+.contactBadge {
+  color: var(--brand-lilac);
+}
+
+.contactBadgeShape {
+  --contact-bg: rgb(40, 0, 62);
+  display: inline-grid;
+  justify-items: center;
+  gap: 0;
+  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.35));
+}
+
+.contactBubble {
+  background: var(--contact-bg);
+  border-radius: 12px;
+  padding: 6px 16px;
+  font-size: 18px;
+  line-height: 1.2;
+  text-align: center;
+  width: fit-content;
+}
+
+/* Slight overlap to create a single connected "blob" silhouette. */
+.contactBubble + .contactBubble {
+  margin-top: -6px;
+}
+
+.contactBubbleTitle {
+  font-weight: 700;
+  font-size: 20px;
+  padding: 6px 18px;
+}
+
+.contactStem {
+  width: 26px;
+  height: 22px;
+  background: var(--contact-bg);
+  border-radius: 10px;
+  margin-top: -6px;
+}
+
+.contactBadge.isFloating {
+  position: fixed;
+  right: 28px;
+  bottom: 22px;
+  z-index: 10;
+}
+
+@media (max-width: 560px) {
+  .contactBubble {
+    font-size: 16px;
+  }
+
+  .contactBadge.isFloating {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+}
