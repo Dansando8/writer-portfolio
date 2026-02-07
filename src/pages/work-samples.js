@@ -44,14 +44,21 @@ const items = [
 ]
 
 export default function WorkSamplesPage() {
+  const [titleDone, setTitleDone] = React.useState(false)
+
   return (
     <main className="workPage">
       <SiteNav />
 
       <section className="workWrap">
-        <TypewriterTitle as="h1" className="workTitle" text="Work samples" />
+        <TypewriterTitle
+          as="h1"
+          className="workTitle"
+          text="Work samples"
+          onDone={() => setTitleDone(true)}
+        />
 
-        <div className="grid">
+        <div className={`grid reveal ${titleDone ? "isVisible" : ""}`}>
           {items.map((it) => (
             <article key={it.href} className="card">
               <div className="iconSlot">
@@ -90,7 +97,10 @@ export default function WorkSamplesPage() {
           ))}
         </div>
 
-        <div className="bottomLogos" aria-label="More work">
+        <div
+          className={`bottomLogos reveal ${titleDone ? "isVisible" : ""}`}
+          aria-label="More work"
+        >
           <a
             className="bottomLogo bottomLogoMatt"
             href="https://matt.de/"
@@ -117,7 +127,10 @@ export default function WorkSamplesPage() {
         </div>
       </section>
 
-      <ContactBadge floating />
+      <ContactBadge
+        floating
+        className={`reveal ${titleDone ? "isVisible" : ""}`}
+      />
     </main>
   )
 }

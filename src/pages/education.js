@@ -4,15 +4,22 @@ import TypewriterTitle from "../components/TypewriterTitle"
 import "./education.css"
 
 export default function EducationPage() {
+  const [titleDone, setTitleDone] = React.useState(false)
+
   return (
     <main className="educationPage">
       <SiteNav />
 
       <section className="educationWrap">
         <div className="leftCol">
-          <TypewriterTitle as="h1" className="eduTitle" text={"My\nEducation"} />
+          <TypewriterTitle
+            as="h1"
+            className="eduTitle"
+            text={"My\nEducation"}
+            onDone={() => setTitleDone(true)}
+          />
 
-          <div className="leftFoot">
+          <div className={`leftFoot reveal ${titleDone ? "isVisible" : ""}`}>
             <div className="leftFootTitle">Arche Medica</div>
             <p className="leftFootText">
               Alternative Practitioner in Psychotherapy
@@ -20,7 +27,7 @@ export default function EducationPage() {
           </div>
         </div>
 
-        <ul className="eduList">
+        <ul className={`eduList reveal ${titleDone ? "isVisible" : ""}`}>
           <li>
             <h2 className="eduItemTitle">Humboldt University Berlin</h2>
             <p className="eduItemText">

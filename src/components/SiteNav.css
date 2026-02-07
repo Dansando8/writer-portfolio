@@ -1,6 +1,6 @@
 .siteNav {
   position: relative;
-  z-index: 3;
+  z-index: 100;
   padding: 28px 24px 0;
   display: flex;
   justify-content: center;
@@ -21,6 +21,55 @@
 
 .siteNavRight {
   /* spacer column to keep the menu centered when the back button shows */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.siteNavToggle {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  margin: 0;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.92);
+  display: none;
+}
+
+.siteNavToggleBars {
+  width: 26px;
+  height: 18px;
+  display: grid;
+  align-content: space-between;
+}
+
+.siteNavToggleBars span {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 220ms ease, opacity 220ms ease;
+}
+
+.siteNav.isMenuOpen .siteNavToggleBars span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.siteNav.isMenuOpen .siteNavToggleBars span:nth-child(2) {
+  opacity: 0;
+}
+
+.siteNav.isMenuOpen .siteNavToggleBars span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.siteNavMenu {
+  position: relative;
+}
+
+.siteNavBackdrop {
+  display: none;
 }
 
 .siteNavBack {
@@ -126,12 +175,85 @@
 }
 
 @media (max-width: 560px) {
+  .siteNav {
+    padding: 18px 16px 0;
+  }
+
   .siteNavGrid {
-    grid-template-columns: 52px 1fr 52px;
+    position: relative;
+    grid-template-columns: 56px 1fr auto;
+  }
+
+  .siteNavRight {
+    justify-self: end;
+  }
+
+  .siteNavToggle {
+    display: inline-grid;
+    padding: 0;
+    margin-right: 0;
+  }
+
+  /* Burger menu on mobile */
+  .siteNavMenu {
+    display: block;
+    position: fixed;
+    top: 54px;
+    left: 50%;
+    width: min(280px, calc(100vw - 32px));
+    padding: 18px 16px;
+    border: 0;
+    z-index: 60;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate3d(-50%, -10px, 0) scale(0.98);
+    transition: opacity 220ms ease, transform 220ms ease, visibility 0ms linear 220ms;
+  }
+
+  .siteNavBackdrop {
+    display: block;
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 56vh;
+    background: rgba(0, 0, 0, 0);
+    border: 0;
+    padding: 0;
+    margin: 0;
+    z-index: 50;
+    cursor: default;
+    -webkit-backdrop-filter: blur(18px) saturate(1.05);
+    backdrop-filter: blur(18px) saturate(1.05);
+    -webkit-mask-image: linear-gradient(#000 0%, #000 60%, transparent 100%);
+    mask-image: linear-gradient(#000 0%, #000 60%, transparent 100%);
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+  }
+
+  .siteNav.isMenuOpen .siteNavBackdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .siteNav.isMenuOpen .siteNavMenu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate3d(-50%, 0, 0) scale(1);
+    transition: opacity 260ms ease, transform 260ms ease, visibility 0ms linear 0ms;
   }
 
   .siteNavList {
+    flex-direction: column;
     gap: 18px;
-    font-size: 16px;
+    font-size: 20px;
+    align-items: center;
+  }
+
+  .siteNavLink {
+    font-size: 22px;
+    padding: 8px 12px;
   }
 }

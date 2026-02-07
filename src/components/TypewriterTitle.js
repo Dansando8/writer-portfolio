@@ -29,19 +29,27 @@ export default function TypewriterTitle({
   as: Tag = "h1",
   text,
   className = "",
-  startDelayMs = 180
+  startDelayMs = 180,
+  onDone
 }) {
   const prefersReducedMotion = usePrefersReducedMotion()
   const [shown, setShown] = React.useState("")
+  const onDoneRef = React.useRef(onDone)
+
+  React.useEffect(() => {
+    onDoneRef.current = onDone
+  }, [onDone])
 
   React.useEffect(() => {
     if (!text) return
     if (prefersReducedMotion) {
       setShown(text)
+      onDoneRef.current?.()
       return
     }
 
     let cancelled = false
+    let doneTimeoutId = null
     let t = 0
     const seed = Array.from(text).reduce((acc, ch) => acc + ch.charCodeAt(0), 0)
     const rnd = mulberry32(seed || 1)
@@ -73,8 +81,14 @@ export default function TypewriterTitle({
       }, startDelayMs + t)
     }
 
+    doneTimeoutId = window.setTimeout(() => {
+      if (cancelled) return
+      onDoneRef.current?.()
+    }, startDelayMs + t + 10)
+
     return () => {
       cancelled = true
+      if (doneTimeoutId != null) window.clearTimeout(doneTimeoutId)
     }
   }, [text, prefersReducedMotion, startDelayMs])
 

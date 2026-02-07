@@ -5,15 +5,22 @@ import TypewriterTitle from "../components/TypewriterTitle"
 import "./about.css"
 
 export default function AboutPage() {
+  const [titleDone, setTitleDone] = React.useState(false)
+
   return (
     <main className="aboutPage">
       <SiteNav />
 
       <section className="aboutWrap">
         <div>
-          <TypewriterTitle as="h1" className="aboutTitle" text="About me" />
+          <TypewriterTitle
+            as="h1"
+            className="aboutTitle"
+            text="About me"
+            onDone={() => setTitleDone(true)}
+          />
 
-          <div className="aboutText">
+          <div className={`aboutText reveal ${titleDone ? "isVisible" : ""}`}>
             <p>
               For <span className="hi">more than eight years</span>, I have
               worked in content creation, focusing on clear, well-structured
@@ -46,7 +53,10 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="rightImage" aria-hidden="true">
+        <div
+          className={`rightImage reveal ${titleDone ? "isVisible" : ""}`}
+          aria-hidden="true"
+        >
           <img src={reflectors} alt="" />
         </div>
       </section>
