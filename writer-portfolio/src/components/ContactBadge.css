@@ -1,0 +1,45 @@
+.contactBadge {
+  background: rgba(40, 0, 62, 0.55);
+  -webkit-backdrop-filter: blur(14px) saturate(1.05);
+  backdrop-filter: blur(14px) saturate(1.05);
+  border-radius: 14px;
+  padding: 12px 18px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.25;
+  color: var(--brand-lilac);
+  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.35));
+  border: 1px solid rgba(203, 108, 230, 0.14);
+}
+
+.contactBadgeTitle {
+  display: block;
+  font-weight: 800;
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.contactBadge.isFloating {
+  position: fixed;
+  right: 48px;
+  bottom: 52px;
+  z-index: 10;
+}
+
+@media (max-width: 560px) {
+  .contactBadge {
+    font-size: 16px;
+  }
+
+  .contactBadgeTitle {
+    font-size: 20px;
+  }
+
+  .contactBadge.isFloating {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    bottom: 16px;
+    max-width: calc(100vw - 32px);
+  }
+}
