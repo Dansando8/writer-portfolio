@@ -33,3 +33,4 @@ Netlify uses:
 
 - Build command: `npm run build`
 - Publish directory: `public`
+- Base directory: `writer-portfolio/` (Netlify must run the build from the Gatsby app folder so it picks up the updated UI)
