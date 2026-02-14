@@ -1,22 +1,80 @@
 .contactBadge {
-  background: rgba(40, 0, 62, 0.55);
-  -webkit-backdrop-filter: blur(14px) saturate(1.05);
-  backdrop-filter: blur(14px) saturate(1.05);
-  border-radius: 14px;
-  padding: 12px 18px;
+  width: min(185px, 48vw);
+  margin: 0 auto;
+  background: rgba(42, 6, 62, 0.7);
+  border-radius: 16px;
+  padding: 4px;
   text-align: center;
-  font-size: 18px;
-  line-height: 1.25;
-  color: var(--brand-lilac);
-  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.35));
-  border: 1px solid rgba(203, 108, 230, 0.14);
+  font-size: 11px;
+  line-height: 1.2;
+  color: #e2aefe;
+  overflow: hidden;
+  backdrop-filter: blur(10px) saturate(1.1);
+  border: none;
+}
+
+.contactBadgeToggle {
+  border: 0;
+  background: transparent;
+  color: #f5caffe;
+  width: 100%;
+  padding: 5px 8px;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  border-radius: 12px;
+  transition: transform 180ms ease;
+  outline: none;
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.contactBadgeToggle:focus-visible,
+.contactBadgeToggle:hover {
+  transform: scale(1.02);
 }
 
 .contactBadgeTitle {
-  display: block;
-  font-weight: 800;
-  font-size: 22px;
-  margin-bottom: 6px;
+  margin: 0;
+  padding: 0;
+  color: var(--brand-lilac);
+}
+
+.contactBadgePanel {
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 300ms ease, opacity 240ms ease 60ms;
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+  font-size: 13px;
+  padding: 0;
+}
+
+.contactBadgePanel.isOpen {
+  max-height: 180px;
+  opacity: 1;
+  margin: 0;
+  padding-bottom: 10px;
+}
+
+.contactBadgeDescription {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.contactBadgeLink {
+  color: #fbd2ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contactBadgeLink:hover,
+.contactBadgeLink:focus-visible {
+  text-decoration: underline;
 }
 
 .contactBadge.isFloating {
@@ -28,11 +86,11 @@
 
 @media (max-width: 560px) {
   .contactBadge {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .contactBadgeTitle {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .contactBadge.isFloating {

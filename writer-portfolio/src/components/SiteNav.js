@@ -4,11 +4,50 @@ import { navigate } from "gatsby"
 import { useLocation } from "@gatsbyjs/reach-router"
 import "./SiteNav.css"
 
-export default function SiteNav() {
+const defaultLabels = {
+  about: "About Me",
+  work: "Work samples",
+  education: "Education"
+}
+
+const languageOptions = [
+  { code: "de", label: "DE", path: "/" },
+  { code: "en", label: "EN", path: "/en" }
+]
+
+const stripTrailingSlash = (value) => {
+  if (!value) return value
+  return value === "/" ? value : value.replace(/\/$/, "")
+}
+
+export default function SiteNav({
+  labels = defaultLabels,
+  pathPrefix = "",
+  locale = "en"
+}) {
   const { pathname } = useLocation()
-  const showBack = pathname && pathname !== "/"
   const [open, setOpen] = React.useState(false)
   const [pendingTo, setPendingTo] = React.useState(null)
+
+  const homePath = pathPrefix || "/"
+  const normalizedHome = stripTrailingSlash(homePath)
+  const normalizedPathname = stripTrailingSlash(pathname)
+  const showBack =
+    pathname &&
+    normalizedPathname !== normalizedHome &&
+    normalizedPathname !== ""
+
+  const resolvePath = (suffix) => `${pathPrefix}${suffix}`
+  const getTarget = (suffix) => {
+    const raw = resolvePath(suffix)
+    return { raw, normalized: stripTrailingSlash(raw) }
+  }
+
+  const targets = {
+    about: getTarget("/about"),
+    work: getTarget("/work-samples"),
+    education: getTarget("/education")
+  }
 
   React.useEffect(() => {
     // Close the mobile menu when navigating.
@@ -27,8 +66,7 @@ export default function SiteNav() {
 
   const ANIM_MS = 420
 
-  const onNavClick = (to) => (e) => {
-    // Let the browser handle new-tab/middle click/etc.
+  const onNavClick = (suffix) => (e) => {
     if (
       e.defaultPrevented ||
       e.button !== 0 ||
@@ -40,14 +78,15 @@ export default function SiteNav() {
       return
     }
 
-    // Already on that route.
-    if (pathname === to || (to !== "/" && pathname === `${to}/`)) return
+    const { raw: targetPath, normalized: normalizedTarget } = getTarget(suffix)
+
+    if (normalizedPathname === normalizedTarget) return
 
     e.preventDefault()
-    setPendingTo(to)
+    setPendingTo(normalizedTarget)
 
     window.setTimeout(() => {
-      navigate(to)
+      navigate(targetPath)
     }, ANIM_MS)
   }
 
@@ -70,7 +109,7 @@ export default function SiteNav() {
           {showBack ? (
             <Link
               className="siteNavBack"
-              to="/"
+              to={homePath}
               aria-label="Back to landing page"
             >
               &lt;
@@ -83,43 +122,57 @@ export default function SiteNav() {
             <li>
               <Link
                 className={`siteNavLink ${
-                  pendingTo === "/about" ? "isPending" : ""
+                  pendingTo === targets.about.normalized ? "isPending" : ""
                 }`}
                 activeClassName="isActive"
-                to="/about"
+                to={targets.about.raw}
                 onClick={onNavClick("/about")}
               >
-                About Me
+                {labels.about}
               </Link>
             </li>
             <li>
               <Link
                 className={`siteNavLink ${
-                  pendingTo === "/work-samples" ? "isPending" : ""
+                  pendingTo === targets.work.normalized ? "isPending" : ""
                 }`}
                 activeClassName="isActive"
-                to="/work-samples"
+                to={targets.work.raw}
                 onClick={onNavClick("/work-samples")}
               >
-                Work samples
+                {labels.work}
               </Link>
             </li>
             <li>
               <Link
                 className={`siteNavLink ${
-                  pendingTo === "/education" ? "isPending" : ""
+                  pendingTo === targets.education.normalized ? "isPending" : ""
                 }`}
                 activeClassName="isActive"
-                to="/education"
+                to={targets.education.raw}
                 onClick={onNavClick("/education")}
               >
-                Education
+                {labels.education}
               </Link>
             </li>
           </ul>
         </div>
 
         <div className="siteNavRight">
+          <div className="siteNavLang" role="presentation">
+            {languageOptions.map((option) => (
+              <Link
+                key={option.code}
+                className={`siteNavLangLink ${
+                  locale === option.code ? "isActive" : ""
+                }`}
+                to={option.path}
+                aria-current={locale === option.code ? "page" : undefined}
+              >
+                {option.label}
+              </Link>
+            ))}
+          </div>
           <button
             className="siteNavToggle"
             type="button"

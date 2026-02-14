@@ -1,6 +1,6 @@
-# Camares Amonat Portfolio
+# Amonat Portfolio
 
-Personal portfolio site for **Camares Amonat** (Journalism, Copywriting, and UX Writing).
+Personal portfolio site for **Amonat** (Journalism, Copywriting, and UX Writing).
 
 ## Requirements
 

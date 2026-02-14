@@ -36,13 +36,14 @@
   white-space: nowrap;
   width: 0;
   opacity: 0.9;
-  animation: loaderTyping 1500ms steps(7, end) infinite;
+  animation: loaderTyping 1500ms steps(8, end) infinite;
 }
 
 .loaderCaret {
   width: 0;
   height: 1.15em;
   border-left: 5px solid var(--brand-yellow);
+  margin-left: clamp(8px, 0.8vw, 14px);
   animation: loaderBlink 900ms steps(1) infinite;
 }
 
@@ -51,10 +52,10 @@
     width: 0;
   }
   40% {
-    width: 7ch;
+    width: calc(7ch + 0.4em);
   }
   70% {
-    width: 7ch;
+    width: calc(7ch + 0.4em);
   }
   100% {
     width: 0;

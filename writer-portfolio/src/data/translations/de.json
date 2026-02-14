@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "landingTitle": "Amonat",
+    "aboutTitle": "Über mich",
+    "workTitle": "Arbeitsproben",
+    "educationTitle": "Ausbildung",
+    "basePath": "",
+    "locale": "de"
+  },
+  "nav": {
+    "about": "Über mich",
+    "work": "Arbeitsproben",
+    "education": "Ausbildung"
+  },
+  "hero": {
+    "title": "Jedes Wort\neine Geschichte",
+    "taglineLines": ["Journalismus, Copywriting", "& UX Writing"]
+  },
+  "contact": {
+    "title": "Kontakt",
+    "name": "Amonat",
+    "email": "amonatwriting@gmail.com"
+  },
+  "about": {
+    "title": "Über mich",
+    "paragraphs": [
+      [
+        {
+          "text": "Seit über acht Jahren bin ich im Bereich Content-Erstellung tätig und lege dabei großen Wert auf klare, gut strukturierte und zielgruppenorientierte Texte für verschiedene Formate und Kanäle.",
+          "highlight": false
+        }
+      ],
+      [
+        {
+          "text": "Als Journalistin habe ich u.a. für DIE ZEIT, DER SPIEGEL, DIE WELT und die Berliner Morgenpost gearbeitet und über diverse Themen wie Psychologie und Gesundheit geschrieben.",
+          "highlight": false
+        }
+      ],
+      [
+        {
+          "text": "Als Copywriterin habe ich für Firmen wie Bosch Hausgeräte, Matt Optik und Insights getextet.",
+          "highlight": false
+        }
+      ],
+      [
+        {
+          "text": "Im Bereich UX-Writing habe ich zuletzt für E.ON gearbeitet.",
+          "highlight": false
+        }
+      ],
+      [
+        {
+          "text": "Zusätzlich bringe ich Erfahrung in der Filmproduktion, Schauspielerei und Moderation mit, sowohl vor der Kamera als auch auf der Bühne.",
+          "highlight": false
+        }
+      ]
+    ]
+  },
+  "work": {
+    "title": "Arbeitsproben"
+  },
+  "disclaimer": "Alle Rechte vorbehalten Amonat 2026",
+  "education": {
+    "title": "Meine Ausbildung",
+    "training": [
+      {
+        "institution": "Humboldt-Universität zu Berlin",
+        "details": [
+          "Master der Medienwissenschaften",
+          "Masterarbeit: Der Einfluss von künstlicher Intelligenz auf den Journalismus (Note: 1,1)"
+        ]
+      },
+      {
+        "institution": "Freie Universität Berlin",
+        "details": [
+          "Bachelor-Abschluss in Publizistik- und Kommunikationswissenschaft und Filmwissenschaft"
+        ]
+      },
+      {
+        "institution": "Universität Leeds und Chulalongkorn-Universität",
+        "details": [
+          "Auslandssemester",
+          "Kommunikations- und Filmwissenschaften"
+        ]
+      }
+    ],
+    "footer": {
+      "title": "Arche Medica",
+      "description": "Heilpraktikerin für Psychotherapie."
+    }
+  }
+}

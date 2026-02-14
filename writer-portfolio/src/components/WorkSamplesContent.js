@@ -1,9 +1,10 @@
 import * as React from "react"
-import SiteNav from "../components/SiteNav"
-import MarkDownIcon from "../components/MarkDownIcon"
-import ContactBadge from "../components/ContactBadge"
-import TypewriterTitle from "../components/TypewriterTitle"
-import "./work-samples.css"
+import SiteNav from "./SiteNav"
+import MarkDownIcon from "./MarkDownIcon"
+import ContactBadge from "./ContactBadge"
+import TypewriterTitle from "./TypewriterTitle"
+import Disclaimer from "./Disclaimer"
+import "../pages/work-samples.css"
 
 import morgenpostLogo from "../images/Berlinermorgenpostlogo(1).jpg"
 import tagesanzeigerLogo from "../images/tages-anzeiger.jpg"
@@ -43,18 +44,22 @@ const items = [
   }
 ]
 
-export default function WorkSamplesPage() {
+export function WorkSamplesContent({ translation }) {
   const [titleDone, setTitleDone] = React.useState(false)
 
   return (
     <main className="workPage">
-      <SiteNav />
+      <SiteNav
+        labels={translation.nav}
+        pathPrefix={translation.meta.basePath}
+        locale={translation.meta.locale}
+      />
 
       <section className="workWrap">
         <TypewriterTitle
           as="h1"
           className="workTitle"
-          text="Work samples"
+          text={translation.work.title}
           onDone={() => setTitleDone(true)}
         />
 
@@ -130,9 +135,15 @@ export default function WorkSamplesPage() {
       <ContactBadge
         floating
         className={`reveal ${titleDone ? "isVisible" : ""}`}
+        strings={translation.contact}
       />
+      <Disclaimer text={translation.disclaimer} />
     </main>
   )
 }
 
-export const Head = () => <title>Work samples | Amonat</title>
+export function WorkSamplesHead({ translation }) {
+  return <title>{`${translation.meta.workTitle} | Amonat`}</title>
+}
+
+export default WorkSamplesContent

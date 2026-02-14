@@ -71,3 +71,31 @@ a {
     pointer-events: auto;
   }
 }
+
+.copyrightNotice {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 24px;
+  width: min(1240px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 4px 12px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 1000;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .copyrightNotice {
+    bottom: 18px;
+    width: calc(100% - 32px);
+    padding: 3px 10px;
+    font-size: 9px;
+  }
+}

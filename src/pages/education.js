@@ -58,4 +58,4 @@ export default function EducationPage() {
   )
 }
 
-export const Head = () => <title>Education | Camares Amonat</title>
+export const Head = () => <title>Education | Amonat</title>

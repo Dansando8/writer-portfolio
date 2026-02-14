@@ -64,4 +64,4 @@ export default function AboutPage() {
   )
 }
 
-export const Head = () => <title>About Me | Camares Amonat</title>
+export const Head = () => <title>About Me | Amonat</title>

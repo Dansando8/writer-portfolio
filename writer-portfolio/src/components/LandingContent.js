@@ -1,21 +1,22 @@
 import * as React from "react"
-import SiteNav from "../components/SiteNav"
-import ContactBadge from "../components/ContactBadge"
-import TypewriterTitle from "../components/TypewriterTitle"
-import "./index.css"
-
+import SiteNav from "./SiteNav"
+import ContactBadge from "./ContactBadge"
+import TypewriterTitle from "./TypewriterTitle"
+import Disclaimer from "./Disclaimer"
 import bg1600Jpg from "../images/optimized/background_writing_machine-1600.jpg"
 import bg2400Jpg from "../images/optimized/background_writing_machine-2400.jpg"
 import bg1600Webp from "../images/optimized/background_writing_machine-1600.webp"
 import bg2400Webp from "../images/optimized/background_writing_machine-2400.webp"
 
-const IndexPage = () => {
+import "../pages/index.css"
+
+export function LandingContent({ translation }) {
   const [ready, setReady] = React.useState(false)
   const [imgLoaded, setImgLoaded] = React.useState(false)
   const [titleDone, setTitleDone] = React.useState(false)
+  const [contentVisible, setContentVisible] = React.useState(false)
 
   React.useEffect(() => {
-    // Avoid an infinite loader if the image fails to load for any reason.
     if (ready) return
     const t = window.setTimeout(() => setReady(true), 8000)
     return () => window.clearTimeout(t)
@@ -27,7 +28,6 @@ const IndexPage = () => {
 
     ;(async () => {
       try {
-        // Wait for fonts to avoid swapping during typewriter animation.
         if (typeof document !== "undefined" && document.fonts?.ready) {
           await document.fonts.ready
         }
@@ -46,8 +46,21 @@ const IndexPage = () => {
     if (!ready) setTitleDone(false)
   }, [ready])
 
+  React.useEffect(() => {
+    if (!titleDone) {
+      setContentVisible(false)
+      return
+    }
+    const timer = window.setTimeout(() => setContentVisible(true), 640)
+    return () => window.clearTimeout(timer)
+  }, [titleDone])
+
   return (
-    <main className="hero">
+    <main
+      className="hero"
+      lang={translation.meta.basePath === "/en" ? "en" : "de"}
+      data-locale={translation.meta.basePath === "/en" ? "en" : "de"}
+    >
       {!ready ? (
         <div className="loaderOverlay" role="status" aria-live="polite">
           <div className="loaderInner">
@@ -80,7 +93,11 @@ const IndexPage = () => {
       <div className="heroTopBlur" aria-hidden="true" />
       <div className="heroShade" />
 
-      <SiteNav />
+      <SiteNav
+        labels={translation.nav}
+        pathPrefix={translation.meta.basePath}
+        locale={translation.meta.locale}
+      />
 
       <section className="content">
         <div className="headlineBlock">
@@ -88,45 +105,49 @@ const IndexPage = () => {
             <TypewriterTitle
               as="h1"
               className="name"
-              text="Amonat"
+              text={translation.hero.title}
               onDone={() => setTitleDone(true)}
             />
           ) : (
             <h1 className="name" style={{ visibility: "hidden" }}>
-              Amonat
+              {translation.hero.title}
             </h1>
           )}
-          <p className={`tagline reveal ${titleDone ? "isVisible" : ""}`}>
-            <span>Journalism, Copywriting</span>
-            <br />
-            <span>&amp; UX Writing</span>
+          <p className={`tagline reveal ${contentVisible ? "isVisible" : ""}`}>
+            {translation.hero.taglineLines.map((line, idx) => (
+              <React.Fragment key={`${line}-${idx}`}>
+                <span>{line}</span>
+                {idx < translation.hero.taglineLines.length - 1 ? <br /> : null}
+              </React.Fragment>
+            ))}
           </p>
         </div>
 
-        {/* Spacer keeps the headline vertically positioned like the mock while the contact card floats. */}
         <div className="contactSpacer" aria-hidden="true" />
 
         <ContactBadge
           floating
-          className={`reveal ${titleDone ? "isVisible" : ""}`}
+          className={`reveal ${contentVisible ? "isVisible" : ""}`}
+          strings={translation.contact}
         />
+        <Disclaimer text={translation.disclaimer} />
       </section>
     </main>
   )
 }
 
-export default IndexPage
-
-export const Head = () => (
-  <>
-    <title>Amonat</title>
-    <link
-      rel="preload"
-      as="image"
-      href={bg2400Webp}
-      type="image/webp"
-      imagesrcset={`${bg1600Webp} 1600w, ${bg2400Webp} 2400w`}
-      imagesizes="100vw"
-    />
-  </>
-)
+export function LandingHead({ translation }) {
+  return (
+    <>
+      <title>{translation.meta.landingTitle}</title>
+      <link
+        rel="preload"
+        as="image"
+        href={bg2400Webp}
+        type="image/webp"
+        imagesrcset={`${bg1600Webp} 1600w, ${bg2400Webp} 2400w`}
+        imagesizes="100vw"
+      />
+    </>
+  )
+}

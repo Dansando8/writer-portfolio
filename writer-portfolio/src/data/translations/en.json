@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "landingTitle": "Amonat",
+    "aboutTitle": "About Me",
+    "workTitle": "Work samples",
+    "educationTitle": "Education",
+    "basePath": "/en",
+    "locale": "en"
+  },
+  "nav": {
+    "about": "About Me",
+    "work": "Work samples",
+    "education": "Education"
+  },
+  "hero": {
+    "title": "Each Word a Story",
+    "taglineLines": ["Journalism, Copywriting", "& UX Writing"]
+  },
+  "contact": {
+    "title": "Contact",
+    "name": "Amonat",
+    "email": "amonatwriting@gmail.com"
+  },
+  "about": {
+    "title": "About me",
+    "paragraphs": [
+      [
+        { "text": "For ", "highlight": false },
+        { "text": "more than eight years", "highlight": true },
+        { "text": ", I have worked in content creation, focusing on clear, well-structured texts for different formats and channels.", "highlight": false }
+      ],
+      [
+        { "text": "As a journalist, I have written for ", "highlight": false },
+        { "text": "DIE ZEIT, DER SPIEGEL, DIE WELT and Berliner Morgenpost", "highlight": true },
+        { "text": ", mainly on topics related to psychology and sustainability.", "highlight": false }
+      ],
+      [
+        { "text": "As a copywriter, I have supported projects for ", "highlight": false },
+        { "text": "Bosch Hausgeraete, Matt Optik and Insights", "highlight": true },
+        { "text": ".", "highlight": false }
+      ],
+      [
+        { "text": "In UX writing, I worked for companies such as ", "highlight": false },
+        { "text": "E.ON", "highlight": true },
+        { "text": ".", "highlight": false }
+      ],
+      [
+        { "text": "Alongside my writing work, I bring experience in ", "highlight": false },
+        { "text": "video production and filmmaking", "highlight": true },
+        { "text": ", as well as in ", "highlight": false },
+        { "text": "acting and moderating", "highlight": true },
+        { "text": ", both on camera and on stage.", "highlight": false }
+      ]
+    ]
+  },
+  "work": {
+    "title": "Work samples"
+  },
+  "disclaimer": "All rights reserved Amonat 2026",
+  "education": {
+    "title": "My Education",
+    "training": [
+      {
+        "institution": "Humboldt University Berlin",
+        "details": [
+          "Master Media Studies",
+          "Master Thesis: The Impact of Artificial Intelligence on Journalism (Grade: 1.1)"
+        ]
+      },
+      {
+        "institution": "Free University Berlin",
+        "details": [
+          "Bachelor Journalism and Communication Studies and Film Studies"
+        ]
+      },
+      {
+        "institution": "University of Leeds and University of Chulalongkorn",
+        "details": [
+          "Exchange Semesters",
+          "Communication and Film Studies"
+        ]
+      }
+    ],
+    "footer": {
+      "title": "Arche Medica",
+      "description": "Alternative Practitioner in Psychotherapy"
+    }
+  }
+}

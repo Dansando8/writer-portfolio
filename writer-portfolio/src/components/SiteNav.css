@@ -26,6 +26,41 @@
   align-items: center;
 }
 
+.siteNavLang {
+  display: flex;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  margin-right: 10px;
+  align-self: center;
+}
+
+.siteNavLangLink {
+  --lang-scale: 1;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.92);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 360ms ease, border-color 240ms ease, color 240ms ease;
+  transform: scale(var(--lang-scale));
+}
+
+.siteNavLangLink.isActive {
+  --lang-scale: 1.12;
+  color: var(--brand-yellow);
+  border-color: var(--brand-yellow);
+}
+
+.siteNavLangLink:not(.isActive) {
+  --lang-scale: 0.92;
+}
+
 .siteNavToggle {
   appearance: none;
   background: transparent;
