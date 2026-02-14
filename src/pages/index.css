@@ -52,10 +52,10 @@
     width: 0;
   }
   40% {
-    width: calc(7ch + 0.4em);
+    width: calc(8ch + 0.4em);
   }
   70% {
-    width: calc(7ch + 0.4em);
+    width: calc(8ch + 0.4em);
   }
   100% {
     width: 0;
