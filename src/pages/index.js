@@ -9,6 +9,15 @@ import bg2400Jpg from "../images/optimized/background_writing_machine-2400.jpg"
 import bg1600Webp from "../images/optimized/background_writing_machine-1600.webp"
 import bg2400Webp from "../images/optimized/background_writing_machine-2400.webp"
 
+const getLoaderDelay = () => {
+  if (typeof window === "undefined") return 8000
+  return new URLSearchParams(window.location.search).get("debugLoader") === "1"
+    ? 120000
+    : 8000
+}
+
+const isLoaderDebug = () => getLoaderDelay() === 120000
+
 const IndexPage = () => {
   const [ready, setReady] = React.useState(false)
   const [imgLoaded, setImgLoaded] = React.useState(false)
@@ -17,12 +26,13 @@ const IndexPage = () => {
   React.useEffect(() => {
     // Avoid an infinite loader if the image fails to load for any reason.
     if (ready) return
-    const t = window.setTimeout(() => setReady(true), 8000)
+    const delay = getLoaderDelay()
+    const t = window.setTimeout(() => setReady(true), delay)
     return () => window.clearTimeout(t)
   }, [ready])
 
   React.useEffect(() => {
-    if (!imgLoaded) return
+    if (!imgLoaded || isLoaderDebug()) return
     let cancelled = false
 
     ;(async () => {

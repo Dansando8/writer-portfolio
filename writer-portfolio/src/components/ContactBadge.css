@@ -97,7 +97,7 @@
     left: 50%;
     right: auto;
     transform: translateX(-50%);
-    bottom: 16px;
+    bottom: 60px;
     max-width: calc(100vw - 32px);
   }
 }

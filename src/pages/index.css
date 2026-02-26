@@ -37,13 +37,16 @@
   width: 0;
   opacity: 0.9;
   animation: loaderTyping 1500ms steps(8, end) infinite;
+  --loader-expanded: calc(10ch + 2em);
+  margin-right: 0.4em;
+  padding-right: 0.8em;
 }
 
 .loaderCaret {
   width: 0;
   height: 1.15em;
   border-left: 5px solid var(--brand-yellow);
-  margin-left: clamp(8px, 0.8vw, 14px);
+  margin-left: clamp(12px, 1vw, 18px);
   animation: loaderBlink 900ms steps(1) infinite;
 }
 
@@ -51,11 +54,9 @@
   0% {
     width: 0;
   }
-  40% {
-    width: calc(8ch + 0.4em);
-  }
+  40%,
   70% {
-    width: calc(8ch + 0.4em);
+    width: var(--loader-expanded);
   }
   100% {
     width: 0;
@@ -205,6 +206,13 @@
     line-height: 1.12;
   }
 
+  .loaderTextTyped {
+    --loader-expanded: calc(10ch + 2.2em);
+  }
+
+  .loaderTextTyped {
+    --loader-expanded: calc(11ch + 2.5em);
+  }
 }
 
 @media (max-width: 900px) {

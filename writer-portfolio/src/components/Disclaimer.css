@@ -10,12 +10,15 @@
   color: rgba(255, 255, 255, 0.78);
   pointer-events: none;
   text-align: center;
+  padding: 0 18px;
+  max-width: min(260px, 90vw);
+  white-space: nowrap;
 }
 
 @media (max-width: 560px) {
   .disclaimer {
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    bottom: 5px;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    bottom: 6px;
   }
 }

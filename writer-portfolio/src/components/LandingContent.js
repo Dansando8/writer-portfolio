@@ -10,6 +10,15 @@ import bg2400Webp from "../images/optimized/background_writing_machine-2400.webp
 
 import "../pages/index.css"
 
+const getLoaderDelay = () => {
+  if (typeof window === "undefined") return 8000
+  return new URLSearchParams(window.location.search).get("debugLoader") === "1"
+    ? 120000
+    : 8000
+}
+
+const isLoaderDebug = () => getLoaderDelay() === 120000
+
 export function LandingContent({ translation }) {
   const [ready, setReady] = React.useState(false)
   const [imgLoaded, setImgLoaded] = React.useState(false)
@@ -18,12 +27,13 @@ export function LandingContent({ translation }) {
 
   React.useEffect(() => {
     if (ready) return
-    const t = window.setTimeout(() => setReady(true), 8000)
+    const delay = getLoaderDelay()
+    const t = window.setTimeout(() => setReady(true), delay)
     return () => window.clearTimeout(t)
   }, [ready])
 
   React.useEffect(() => {
-    if (!imgLoaded) return
+    if (!imgLoaded || isLoaderDebug()) return
     let cancelled = false
 
     ;(async () => {
