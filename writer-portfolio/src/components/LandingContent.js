@@ -10,16 +10,19 @@ import bg2400Webp from "../images/optimized/background_writing_machine-2400.webp
 
 import "../pages/index.css"
 
+const DEFAULT_LOADER_DELAY_MS = 2500
+
 const getLoaderDelay = () => {
-  if (typeof window === "undefined") return 8000
+  if (typeof window === "undefined") return DEFAULT_LOADER_DELAY_MS
   return new URLSearchParams(window.location.search).get("debugLoader") === "1"
     ? 120000
-    : 8000
+    : DEFAULT_LOADER_DELAY_MS
 }
 
 const isLoaderDebug = () => getLoaderDelay() === 120000
 
 export function LandingContent({ translation }) {
+  const heroImgRef = React.useRef(null)
   const [ready, setReady] = React.useState(false)
   const [imgLoaded, setImgLoaded] = React.useState(false)
   const [titleDone, setTitleDone] = React.useState(false)
@@ -34,27 +37,19 @@ export function LandingContent({ translation }) {
 
   React.useEffect(() => {
     if (!imgLoaded || isLoaderDebug()) return
-    let cancelled = false
-
-    ;(async () => {
-      try {
-        if (typeof document !== "undefined" && document.fonts?.ready) {
-          await document.fonts.ready
-        }
-      } catch {
-        // Ignore
-      }
-      if (!cancelled) setReady(true)
-    })()
-
-    return () => {
-      cancelled = true
-    }
+    setReady(true)
   }, [imgLoaded])
 
   React.useEffect(() => {
     if (!ready) setTitleDone(false)
   }, [ready])
+
+  React.useEffect(() => {
+    const node = heroImgRef.current
+    if (node && node.complete) {
+      setImgLoaded(true)
+    }
+  }, [])
 
   React.useEffect(() => {
     if (!titleDone) {
@@ -88,8 +83,9 @@ export function LandingContent({ translation }) {
             sizes="100vw"
           />
           <img
+            ref={heroImgRef}
             className="heroImg"
-            src={bg2400Jpg}
+            src={bg1600Jpg}
             srcSet={`${bg1600Jpg} 1600w, ${bg2400Jpg} 2400w`}
             sizes="100vw"
             alt=""
@@ -97,17 +93,20 @@ export function LandingContent({ translation }) {
             decoding="async"
             fetchPriority="high"
             onLoad={() => setImgLoaded(true)}
+            onError={() => setImgLoaded(true)}
           />
         </picture>
       </div>
       <div className="heroTopBlur" aria-hidden="true" />
       <div className="heroShade" />
 
-      <SiteNav
-        labels={translation.nav}
-        pathPrefix={translation.meta.basePath}
-        locale={translation.meta.locale}
-      />
+      {ready ? (
+        <SiteNav
+          labels={translation.nav}
+          pathPrefix={translation.meta.basePath}
+          locale={translation.meta.locale}
+        />
+      ) : null}
 
       <section className="content">
         <div className="headlineBlock">
@@ -153,7 +152,7 @@ export function LandingHead({ translation }) {
       <link
         rel="preload"
         as="image"
-        href={bg2400Webp}
+        href={bg1600Webp}
         type="image/webp"
         imagesrcset={`${bg1600Webp} 1600w, ${bg2400Webp} 2400w`}
         imagesizes="100vw"
