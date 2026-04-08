@@ -74,9 +74,11 @@ export function LandingContent({ translation, forcedVariant }) {
   }, [portfolioVariant])
   const heroImgRef = React.useRef(null)
   const [ready, setReady] = React.useState(false)
+  const [entered, setEntered] = React.useState(false)
   const [imgLoaded, setImgLoaded] = React.useState(false)
   const [titleDone, setTitleDone] = React.useState(false)
   const [contentVisible, setContentVisible] = React.useState(false)
+  const enterLabel = translation.meta.locale === "en" ? "Enter" : "Eintreten"
 
   React.useEffect(() => {
     if (ready) return
@@ -91,8 +93,8 @@ export function LandingContent({ translation, forcedVariant }) {
   }, [imgLoaded])
 
   React.useEffect(() => {
-    if (!ready) setTitleDone(false)
-  }, [ready])
+    if (!ready || !entered) setTitleDone(false)
+  }, [ready, entered])
 
   React.useEffect(() => {
     const node = heroImgRef.current
@@ -102,13 +104,13 @@ export function LandingContent({ translation, forcedVariant }) {
   }, [])
 
   React.useEffect(() => {
-    if (!titleDone) {
+    if (!entered || !titleDone) {
       setContentVisible(false)
       return
     }
     const timer = window.setTimeout(() => setContentVisible(true), 640)
     return () => window.clearTimeout(timer)
-  }, [titleDone])
+  }, [entered, titleDone])
 
   React.useEffect(() => {
     if (typeof window === "undefined") return
@@ -138,6 +140,21 @@ export function LandingContent({ translation, forcedVariant }) {
             <span className="loaderCaret" aria-hidden="true" />
           </div>
         </div>
+      ) : !entered ? (
+        <div className="loaderOverlay isEnterGate" role="dialog" aria-modal="true">
+          <div className="loaderGateInner">
+            <button
+              type="button"
+              className="loaderEnterButton"
+              onClick={() => {
+                requestTypewriterAudioUnlock()
+                setEntered(true)
+              }}
+            >
+              {enterLabel}
+            </button>
+          </div>
+        </div>
       ) : null}
 
       <div className="heroMedia" aria-hidden="true">
@@ -165,7 +182,7 @@ export function LandingContent({ translation, forcedVariant }) {
       <div className="heroTopBlur" aria-hidden="true" />
       <div className="heroShade" />
 
-      {ready ? (
+      {ready && entered ? (
         <SiteNav
           labels={content.nav}
           pathPrefix={content.meta.basePath}
@@ -176,7 +193,7 @@ export function LandingContent({ translation, forcedVariant }) {
 
       <section className="content">
         <div className="headlineBlock">
-          {ready ? (
+          {ready && entered ? (
             <TypewriterTitle
               as="h1"
               className="name"

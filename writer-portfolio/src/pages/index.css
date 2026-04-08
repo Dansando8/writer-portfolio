@@ -30,6 +30,50 @@
   text-transform: uppercase;
 }
 
+.loaderOverlay.isEnterGate {
+  background:
+    linear-gradient(180deg, rgba(12, 12, 14, 0.78) 0%, rgba(12, 12, 14, 0.9) 100%),
+    radial-gradient(1200px 700px at 40% 40%, #36363a 0%, #141416 55%, #0c0c0e 100%);
+  backdrop-filter: blur(10px) grayscale(100%);
+}
+
+.loaderGateInner {
+  display: grid;
+  place-items: center;
+}
+
+.loaderEnterButton {
+  appearance: none;
+  border: 1px solid rgba(255, 228, 92, 0.8);
+  background: rgba(20, 20, 22, 0.66);
+  color: var(--brand-yellow);
+  min-width: 180px;
+  padding: 16px 32px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: clamp(18px, 2vw, 28px);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.loaderEnterButton:hover {
+  transform: translateY(-1px);
+  background: rgba(38, 38, 42, 0.82);
+  box-shadow: 0 16px 46px rgba(0, 0, 0, 0.42);
+}
+
+.loaderEnterButton:focus-visible {
+  outline: 2px solid rgba(255, 228, 92, 0.85);
+  outline-offset: 4px;
+}
+
 .loaderTextTyped {
   display: inline-block;
   overflow: hidden;
