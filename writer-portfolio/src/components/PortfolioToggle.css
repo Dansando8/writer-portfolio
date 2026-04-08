@@ -1,0 +1,54 @@
+.portfolioToggle {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 18px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(16, 16, 18, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.portfolioToggleButtons {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.portfolioToggleButton {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(12, 14, 18, 0.56);
+  color: rgba(255, 255, 255, 0.88);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.portfolioToggleButton:hover,
+.portfolioToggleButton:focus-visible {
+  border-color: rgba(255, 255, 255, 0.78);
+  color: #fff;
+}
+
+.portfolioToggleButton.isActive {
+  background: rgba(52, 56, 64, 0.62);
+  border-color: rgba(255, 255, 255, 0.38);
+  color: rgba(255, 255, 255, 0.98);
+}
+
+@media (max-width: 560px) {
+  .portfolioToggle {
+    margin-top: 14px;
+    padding: 7px 8px;
+  }
+
+  .portfolioToggleButton {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}

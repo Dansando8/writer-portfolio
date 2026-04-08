@@ -1,12 +1,18 @@
 import * as React from "react"
+import { navigate } from "gatsby"
 import SiteNav from "./SiteNav"
 import ContactBadge from "./ContactBadge"
 import TypewriterTitle from "./TypewriterTitle"
+import { requestTypewriterAudioUnlock } from "./TypewriterTitle"
 import Disclaimer from "./Disclaimer"
+import PortfolioToggle from "./PortfolioToggle"
 import bg1600Jpg from "../images/optimized/background_writing_machine-1600.jpg"
 import bg2400Jpg from "../images/optimized/background_writing_machine-2400.jpg"
 import bg1600Webp from "../images/optimized/background_writing_machine-1600.webp"
 import bg2400Webp from "../images/optimized/background_writing_machine-2400.webp"
+import theater1600Webp from "../images/optimized/theater-1600.webp"
+import { usePortfolioVariant } from "../hooks/usePortfolioVariant"
+import { resolvePortfolioContent } from "../data/portfolioContent"
 
 import "../pages/index.css"
 
@@ -21,7 +27,51 @@ const getLoaderDelay = () => {
 
 const isLoaderDebug = () => getLoaderDelay() === 120000
 
-export function LandingContent({ translation }) {
+const HOME_PATHS = {
+  de: { writing: "/writing", impro: "/impro" },
+  en: { writing: "/en/writing", impro: "/en/impro" }
+}
+
+export function LandingContent({ translation, forcedVariant }) {
+  const [storedVariant, setStoredVariant] = usePortfolioVariant()
+  const portfolioVariant = forcedVariant || storedVariant
+  const localeKey = translation.meta.locale === "en" ? "en" : "de"
+  const content = React.useMemo(
+    () => resolvePortfolioContent(translation.meta.locale, portfolioVariant),
+    [translation.meta.locale, portfolioVariant]
+  )
+  const resolveHomePath = React.useCallback(
+    (variant) => HOME_PATHS[localeKey][variant === "impro" ? "impro" : "writing"],
+    [localeKey]
+  )
+  const setPortfolioVariant = React.useCallback(
+    (nextVariant) => {
+      const normalized = nextVariant === "impro" ? "impro" : "writing"
+      setStoredVariant(normalized)
+      const targetPath = resolveHomePath(normalized)
+      if (typeof window !== "undefined" && window.location.pathname !== targetPath) {
+        navigate(targetPath)
+      }
+    },
+    [resolveHomePath, setStoredVariant]
+  )
+
+  const heroSources = React.useMemo(() => {
+    if (portfolioVariant === "impro") {
+      return {
+        sourceType: "image/webp",
+        sourceSet: `${theater1600Webp} 1600w`,
+        imgSrc: theater1600Webp,
+        imgSet: `${theater1600Webp} 1600w`
+      }
+    }
+    return {
+      sourceType: "image/webp",
+      sourceSet: `${bg1600Webp} 1600w, ${bg2400Webp} 2400w`,
+      imgSrc: bg1600Jpg,
+      imgSet: `${bg1600Jpg} 1600w, ${bg2400Jpg} 2400w`
+    }
+  }, [portfolioVariant])
   const heroImgRef = React.useRef(null)
   const [ready, setReady] = React.useState(false)
   const [imgLoaded, setImgLoaded] = React.useState(false)
@@ -60,11 +110,26 @@ export function LandingContent({ translation }) {
     return () => window.clearTimeout(timer)
   }, [titleDone])
 
+  React.useEffect(() => {
+    if (typeof window === "undefined") return
+    const onEarlyInteraction = () => requestTypewriterAudioUnlock()
+    window.addEventListener("pointerdown", onEarlyInteraction, { passive: true })
+    window.addEventListener("touchstart", onEarlyInteraction, { passive: true })
+    window.addEventListener("keydown", onEarlyInteraction)
+    window.addEventListener("wheel", onEarlyInteraction, { passive: true })
+    return () => {
+      window.removeEventListener("pointerdown", onEarlyInteraction)
+      window.removeEventListener("touchstart", onEarlyInteraction)
+      window.removeEventListener("keydown", onEarlyInteraction)
+      window.removeEventListener("wheel", onEarlyInteraction)
+    }
+  }, [])
+
   return (
     <main
       className="hero"
-      lang={translation.meta.basePath === "/en" ? "en" : "de"}
-      data-locale={translation.meta.basePath === "/en" ? "en" : "de"}
+      lang={translation.meta.locale === "en" ? "en" : "de"}
+      data-locale={translation.meta.locale === "en" ? "en" : "de"}
     >
       {!ready ? (
         <div className="loaderOverlay" role="status" aria-live="polite">
@@ -78,15 +143,15 @@ export function LandingContent({ translation }) {
       <div className="heroMedia" aria-hidden="true">
         <picture>
           <source
-            type="image/webp"
-            srcSet={`${bg1600Webp} 1600w, ${bg2400Webp} 2400w`}
+            type={heroSources.sourceType}
+            srcSet={heroSources.sourceSet}
             sizes="100vw"
           />
           <img
             ref={heroImgRef}
             className="heroImg"
-            src={bg1600Jpg}
-            srcSet={`${bg1600Jpg} 1600w, ${bg2400Jpg} 2400w`}
+            src={heroSources.imgSrc}
+            srcSet={heroSources.imgSet}
             sizes="100vw"
             alt=""
             loading="eager"
@@ -102,9 +167,10 @@ export function LandingContent({ translation }) {
 
       {ready ? (
         <SiteNav
-          labels={translation.nav}
-          pathPrefix={translation.meta.basePath}
-          locale={translation.meta.locale}
+          labels={content.nav}
+          pathPrefix={content.meta.basePath}
+          locale={content.meta.locale}
+          showEducation={Boolean(content.nav?.education)}
         />
       ) : null}
 
@@ -114,19 +180,19 @@ export function LandingContent({ translation }) {
             <TypewriterTitle
               as="h1"
               className="name"
-              text={translation.hero.title}
+              text={content.hero.title}
               onDone={() => setTitleDone(true)}
             />
           ) : (
             <h1 className="name" style={{ visibility: "hidden" }}>
-              {translation.hero.title}
+              {content.hero.title}
             </h1>
           )}
           <p className={`tagline reveal ${contentVisible ? "isVisible" : ""}`}>
-            {translation.hero.taglineLines.map((line, idx) => (
+            {content.hero.taglineLines.map((line, idx) => (
               <React.Fragment key={`${line}-${idx}`}>
                 <span>{line}</span>
-                {idx < translation.hero.taglineLines.length - 1 ? <br /> : null}
+                {idx < content.hero.taglineLines.length - 1 ? <br /> : null}
               </React.Fragment>
             ))}
           </p>
@@ -137,24 +203,41 @@ export function LandingContent({ translation }) {
         <ContactBadge
           floating
           className={`reveal ${contentVisible ? "isVisible" : ""}`}
-          strings={translation.contact}
+          strings={content.contact}
         />
-        <Disclaimer text={translation.disclaimer} />
+        <div className={`portfolioToggleDock reveal ${contentVisible ? "isVisible" : ""}`}>
+          <PortfolioToggle
+            value={portfolioVariant}
+            onChange={setPortfolioVariant}
+            strings={content.portfolioSwitch}
+          />
+        </div>
+        <Disclaimer text={content.disclaimer} />
       </section>
     </main>
   )
 }
 
-export function LandingHead({ translation }) {
+export function LandingHead({ translation, forcedVariant }) {
+  const [portfolioVariant] = usePortfolioVariant()
+  const activeVariant = forcedVariant || portfolioVariant
+  const content = resolvePortfolioContent(translation.meta.locale, activeVariant)
+  const preloadHref =
+    activeVariant === "impro" ? theater1600Webp : bg1600Webp
+  const preloadSet =
+    activeVariant === "impro"
+      ? `${theater1600Webp} 1600w`
+      : `${bg1600Webp} 1600w, ${bg2400Webp} 2400w`
+
   return (
     <>
-      <title>{translation.meta.landingTitle}</title>
+      <title>{content.meta.landingTitle}</title>
       <link
         rel="preload"
         as="image"
-        href={bg1600Webp}
+        href={preloadHref}
         type="image/webp"
-        imagesrcset={`${bg1600Webp} 1600w, ${bg2400Webp} 2400w`}
+        imagesrcset={preloadSet}
         imagesizes="100vw"
       />
     </>

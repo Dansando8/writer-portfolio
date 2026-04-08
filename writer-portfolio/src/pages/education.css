@@ -7,15 +7,15 @@
 .educationWrap {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 54px 24px 64px;
+  padding: 48px 24px 40px;
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 64px;
+  grid-template-columns: minmax(610px, 1.18fr) minmax(380px, 0.82fr);
+  gap: 54px;
   align-items: start;
 }
 
 .leftCol {
-  min-height: calc(100vh - 170px);
+  min-height: calc(100vh - 188px);
   display: flex;
   flex-direction: column;
 }
@@ -23,8 +23,8 @@
 .eduTitle {
   margin: 0;
   font-weight: 800;
-  font-size: clamp(72px, 8.5vw, 140px);
-  line-height: 0.86;
+  font-size: clamp(86px, 8.9vw, 146px);
+  line-height: 0.84;
   letter-spacing: -0.03em;
   color: var(--brand-yellow);
 }
@@ -49,11 +49,12 @@
 }
 
 .eduList {
-  margin: 40px 0 0;
+  margin: 30px 0 0;
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 54px;
+  gap: 48px;
+  max-width: 500px;
 }
 
 .eduItemTitle {
@@ -87,4 +88,3 @@
     gap: 36px;
   }
 }
-

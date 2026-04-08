@@ -2,32 +2,53 @@ import * as React from "react"
 import SiteNav from "./SiteNav"
 import TypewriterTitle from "./TypewriterTitle"
 import Disclaimer from "./Disclaimer"
-import reflectors from "../images/reflectors.jpg"
+import { usePortfolioVariant } from "../hooks/usePortfolioVariant"
+import { resolvePortfolioContent } from "../data/portfolioContent"
 import "../pages/about.css"
 
-export function AboutContent({ translation }) {
+export function AboutContent({ translation, forcedVariant }) {
+  const [portfolioVariant] = usePortfolioVariant()
+  const activeVariant = forcedVariant || portfolioVariant
+  const content = React.useMemo(
+    () => resolvePortfolioContent(translation.meta.locale, activeVariant),
+    [translation.meta.locale, activeVariant]
+  )
+  const isBackdropLayout = content.about.layout === "backdrop"
   const [titleDone, setTitleDone] = React.useState(false)
 
   return (
-    <main className="aboutPage">
+    <main
+      className={`aboutPage ${isBackdropLayout ? "aboutPageBackdrop" : ""}`}
+      data-locale={content.meta.locale}
+    >
+      {isBackdropLayout ? (
+        <div
+          className="aboutBackdrop"
+          style={{ backgroundImage: `url(${content.about.image?.src})` }}
+          aria-hidden="true"
+        />
+      ) : null}
       <SiteNav
-        labels={translation.nav}
-        pathPrefix={translation.meta.basePath}
-        locale={translation.meta.locale}
-      />
+        labels={content.nav}
+        pathPrefix={content.meta.basePath}
+        locale={content.meta.locale}
+          showEducation={Boolean(content.nav?.education)}
+        />
 
-      <section className="aboutWrap">
-        <div>
+      <section className={`aboutWrap ${isBackdropLayout ? "isBackdrop" : ""}`}>
+        <div className="aboutLeftCol">
           <TypewriterTitle
             as="h1"
             className="aboutTitle"
-            text={translation.about.title}
+            text={content.about.title}
             onDone={() => setTitleDone(true)}
           />
+        </div>
 
-          <div className={`aboutText reveal ${titleDone ? "isVisible" : ""}`}>
-            {translation.about.paragraphs.map((paragraph, pIdx) => (
-              <p key={pIdx}>
+        <div className={`aboutText reveal ${titleDone ? "isVisible" : ""}`}>
+          {content.about.paragraphs.map((paragraph, pIdx) => (
+            <div key={pIdx} className="aboutParagraph">
+              <p>
                 {paragraph.map((segment, sIdx) =>
                   segment.highlight ? (
                     <span key={sIdx} className="hi">
@@ -38,22 +59,31 @@ export function AboutContent({ translation }) {
                   )
                 )}
               </p>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
 
-        <div
-          className={`rightImage reveal ${titleDone ? "isVisible" : ""}`}
-          aria-hidden="true"
-        >
-          <img src={reflectors} alt="" />
-        </div>
+        {!isBackdropLayout ? (
+          <div
+            className={`rightImage reveal ${titleDone ? "isVisible" : ""}`}
+            aria-hidden="true"
+          >
+            <img
+              src={content.about.image?.src}
+              alt={content.about.image?.alt || ""}
+              loading="lazy"
+            />
+          </div>
+        ) : null}
       </section>
-      <Disclaimer text={translation.disclaimer} />
+      <Disclaimer text={content.disclaimer} />
     </main>
   )
 }
 
-export function AboutHead({ translation }) {
-  return <title>{`${translation.meta.aboutTitle} | Amonat`}</title>
+export function AboutHead({ translation, forcedVariant }) {
+  const [portfolioVariant] = usePortfolioVariant()
+  const activeVariant = forcedVariant || portfolioVariant
+  const content = resolvePortfolioContent(translation.meta.locale, activeVariant)
+  return <title>{`${content.meta.aboutTitle} | ${content.meta.landingTitle}`}</title>
 }

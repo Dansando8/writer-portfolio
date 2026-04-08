@@ -1,9 +1,11 @@
 import * as React from "react"
-import { EducationContent, EducationHead } from "../components/EducationContent"
-import deTranslation from "../data/translations/de.json"
+import { navigate } from "gatsby"
 
-export default function EducationPage() {
-  return <EducationContent translation={deTranslation} />
+export default function EducationRedirectPage() {
+  React.useEffect(() => {
+    navigate("/writing/education", { replace: true })
+  }, [])
+  return null
 }
 
-export const Head = () => <EducationHead translation={deTranslation} />
+export const Head = () => <title>Amonat</title>

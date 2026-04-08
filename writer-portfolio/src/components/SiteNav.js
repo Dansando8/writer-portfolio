@@ -2,6 +2,7 @@ import * as React from "react"
 import { Link } from "gatsby"
 import { navigate } from "gatsby"
 import { useLocation } from "@gatsbyjs/reach-router"
+import { playTypewriterReturnSound, playUiToggleSound } from "./TypewriterTitle"
 import "./SiteNav.css"
 
 const defaultLabels = {
@@ -9,11 +10,6 @@ const defaultLabels = {
   work: "Work samples",
   education: "Education"
 }
-
-const languageOptions = [
-  { code: "de", label: "DE", path: "/" },
-  { code: "en", label: "EN", path: "/en" }
-]
 
 const stripTrailingSlash = (value) => {
   if (!value) return value
@@ -23,15 +19,36 @@ const stripTrailingSlash = (value) => {
 export default function SiteNav({
   labels = defaultLabels,
   pathPrefix = "",
-  locale = "en"
+  locale = "en",
+  showEducation = true
 }) {
+  const educationVisible = showEducation && Boolean(labels?.education)
   const { pathname } = useLocation()
   const [open, setOpen] = React.useState(false)
   const [pendingTo, setPendingTo] = React.useState(null)
 
   const homePath = pathPrefix || "/"
+  const isImproNamespace = homePath.includes("/impro")
+  const isWritingNamespace = homePath.includes("/writing")
+  const normalizedPathname = stripTrailingSlash(pathname || "") || "/"
+  const currentSuffix = normalizedPathname
+    .replace(/^\/en/, "")
+    .replace(/^\/(writing|impro)/, "") || ""
+  const resolveLocalePath = (targetLocale) => {
+    const localePrefix = targetLocale === "en" ? "/en" : ""
+    const namespacePrefix = isImproNamespace
+      ? "/impro"
+      : isWritingNamespace
+        ? "/writing"
+        : ""
+    const next = `${localePrefix}${namespacePrefix}${currentSuffix}`
+    return stripTrailingSlash(next) || "/"
+  }
+  const languageOptions = [
+    { code: "de", label: "DE", path: resolveLocalePath("de") },
+    { code: "en", label: "EN", path: resolveLocalePath("en") }
+  ]
   const normalizedHome = stripTrailingSlash(homePath)
-  const normalizedPathname = stripTrailingSlash(pathname)
   const showBack =
     pathname &&
     normalizedPathname !== normalizedHome &&
@@ -83,11 +100,31 @@ export default function SiteNav({
     if (normalizedPathname === normalizedTarget) return
 
     e.preventDefault()
+    playUiToggleSound(suffix.length)
     setPendingTo(normalizedTarget)
 
     window.setTimeout(() => {
       navigate(targetPath)
     }, ANIM_MS)
+  }
+
+  const onLanguageClick = (option) => (e) => {
+    if (
+      e.defaultPrevented ||
+      e.button !== 0 ||
+      e.metaKey ||
+      e.altKey ||
+      e.ctrlKey ||
+      e.shiftKey
+    ) {
+      return
+    }
+    if (locale === option.code) return
+    playUiToggleSound(option.code === "en" ? 11 : 5)
+  }
+
+  const onBackClick = () => {
+    playTypewriterReturnSound(4)
   }
 
   return (
@@ -111,6 +148,7 @@ export default function SiteNav({
               className="siteNavBack"
               to={homePath}
               aria-label="Back to landing page"
+              onClick={onBackClick}
             >
               &lt;
             </Link>
@@ -143,18 +181,20 @@ export default function SiteNav({
                 {labels.work}
               </Link>
             </li>
-            <li>
-              <Link
-                className={`siteNavLink ${
-                  pendingTo === targets.education.normalized ? "isPending" : ""
-                }`}
-                activeClassName="isActive"
-                to={targets.education.raw}
-                onClick={onNavClick("/education")}
-              >
-                {labels.education}
-              </Link>
-            </li>
+            {educationVisible ? (
+              <li>
+                <Link
+                  className={`siteNavLink ${
+                    pendingTo === targets.education.normalized ? "isPending" : ""
+                  }`}
+                  activeClassName="isActive"
+                  to={targets.education.raw}
+                  onClick={onNavClick("/education")}
+                >
+                  {labels.education}
+                </Link>
+              </li>
+            ) : null}
           </ul>
         </div>
 
@@ -168,6 +208,7 @@ export default function SiteNav({
                 }`}
                 to={option.path}
                 aria-current={locale === option.code ? "page" : undefined}
+                onClick={onLanguageClick(option)}
               >
                 {option.label}
               </Link>

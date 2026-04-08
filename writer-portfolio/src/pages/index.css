@@ -190,6 +190,26 @@
   height: 140px;
 }
 
+.portfolioToggleDock {
+  position: fixed;
+  left: 50%;
+  bottom: 34px;
+  transform: translateX(-50%);
+  z-index: 5;
+}
+
+.portfolioToggleDock.reveal {
+  transform: translate3d(-50%, 10px, 0);
+}
+
+.portfolioToggleDock.reveal.isVisible {
+  transform: translate3d(-50%, 0, 0);
+}
+
+.portfolioToggleDock .portfolioToggle {
+  margin-top: 0;
+}
+
 @media (max-width: 560px) {
   .contactSpacer {
     height: 150px;
@@ -215,6 +235,17 @@
     --loader-expanded: calc(10ch + 2em);
   }
 
+  .portfolioToggleDock {
+    bottom: 54px;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolioToggleDock.reveal,
+  .portfolioToggleDock.reveal.isVisible {
+    transform: translateX(-50%);
+  }
 }
 
 @media (max-width: 900px) {

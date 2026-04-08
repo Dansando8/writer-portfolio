@@ -1,12 +1,11 @@
 import * as React from "react"
-import {
-  WorkSamplesContent,
-  WorkSamplesHead
-} from "../../components/WorkSamplesContent"
-import enTranslation from "../../data/translations/en.json"
+import { navigate } from "gatsby"
 
-export default function EnglishWorkSamplesPage() {
-  return <WorkSamplesContent translation={enTranslation} />
+export default function EnglishWorkSamplesRedirectPage() {
+  React.useEffect(() => {
+    navigate("/en/writing/work-samples", { replace: true })
+  }, [])
+  return null
 }
 
-export const Head = () => <WorkSamplesHead translation={enTranslation} />
+export const Head = () => <title>Amonat</title>
