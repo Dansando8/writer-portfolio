@@ -154,8 +154,8 @@ const improByLocale = {
       paths: { about: "/ueber-mich", work: "/impro-kurse" }
     },
     hero: {
-      title: "Improvisationstheater",
-      taglineLines: ["Teambuilding, Perspektivwechsel", "& Spontanität"]
+      title: "Impro Theater",
+      taglineLines: ["Teambuilding, Spontanität", "& Perspektivwechsel"]
     },
     contact: {
       title: "Kontakt",
@@ -318,7 +318,7 @@ const improByLocale = {
     },
     hero: {
       title: "Improvisational Theater",
-      taglineLines: ["Team Cohesion, New Perspectives,", "Spontaneity"]
+      taglineLines: ["Team Cohesion, Spontaneity,", "New Perspectives"]
     },
     contact: {
       title: "Contact",

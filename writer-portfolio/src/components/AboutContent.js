@@ -2,6 +2,7 @@ import * as React from "react"
 import SiteNav from "./SiteNav"
 import TypewriterTitle from "./TypewriterTitle"
 import Disclaimer from "./Disclaimer"
+import Seo, { flattenRichParagraphs } from "./Seo"
 import { usePortfolioVariant } from "../hooks/usePortfolioVariant"
 import { useReloadRedirectToRoot } from "../hooks/useReloadRedirectToRoot"
 import { resolvePortfolioContent } from "../data/portfolioContent"
@@ -48,7 +49,7 @@ export function AboutContent({ translation, forcedVariant }) {
           />
         </div>
 
-        <div className={`aboutText reveal ${titleDone ? "isVisible" : ""}`}>
+        <div className={`aboutText reveal ${(titleDone || isBackdropLayout) ? "isVisible" : ""}`}>
           {content.about.paragraphs.map((paragraph, pIdx) => (
             <div key={pIdx} className="aboutParagraph">
               <p>
@@ -85,8 +86,35 @@ export function AboutContent({ translation, forcedVariant }) {
 }
 
 export function AboutHead({ translation, forcedVariant }) {
-  const [portfolioVariant] = usePortfolioVariant()
-  const activeVariant = forcedVariant || portfolioVariant
+  const activeVariant = forcedVariant || "writing"
   const content = resolvePortfolioContent(translation.meta.locale, activeVariant)
-  return <title>{`${content.meta.aboutTitle} | ${content.meta.landingTitle}`}</title>
+  const path = `${content.meta.basePath}${content.nav.paths.about}`
+  const alternateLocale = content.meta.locale === "en" ? "de" : "en"
+  const alternateContent = resolvePortfolioContent(alternateLocale, activeVariant)
+  const description = flattenRichParagraphs(content.about.paragraphs)
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": activeVariant === "impro" ? "ProfessionalService" : "Person",
+    name: content.contact?.name || "Amonat",
+    url: path,
+    inLanguage: content.meta.locale,
+    description
+  }
+
+  return (
+    <Seo
+      title={`${content.meta.aboutTitle} | ${content.meta.landingTitle}`}
+      description={description}
+      pathname={path}
+      locale={content.meta.locale}
+      image={content.about.image?.src}
+      imageAlt={content.meta.aboutTitle}
+      alternates={[
+        { hrefLang: content.meta.locale, href: path },
+        { hrefLang: alternateLocale, href: `${alternateContent.meta.basePath}${alternateContent.nav.paths.about}` },
+        { hrefLang: "x-default", href: "/writing/about" }
+      ]}
+      schema={schema}
+    />
+  )
 }

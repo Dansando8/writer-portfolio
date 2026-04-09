@@ -3,6 +3,7 @@ import { navigate } from "gatsby"
 import SiteNav from "./SiteNav"
 import TypewriterTitle from "./TypewriterTitle"
 import Disclaimer from "./Disclaimer"
+import Seo from "./Seo"
 import { usePortfolioVariant } from "../hooks/usePortfolioVariant"
 import { useReloadRedirectToRoot } from "../hooks/useReloadRedirectToRoot"
 import { resolvePortfolioContent } from "../data/portfolioContent"
@@ -69,10 +70,43 @@ export function EducationContent({ translation, forcedVariant }) {
 }
 
 export function EducationHead({ translation, forcedVariant }) {
-  const [portfolioVariant] = usePortfolioVariant()
-  const activeVariant = forcedVariant || portfolioVariant
+  const activeVariant = forcedVariant || "writing"
   const content = resolvePortfolioContent(translation.meta.locale, activeVariant)
+  const path = `${content.meta.basePath}${content.nav.paths.education || "/education"}`
+  const alternateLocale = content.meta.locale === "en" ? "de" : "en"
+  const alternateContent = resolvePortfolioContent(alternateLocale, activeVariant)
+  const description = [
+    content.education.footer?.description,
+    ...(content.education.training || []).map((item) => item.institution)
+  ]
+    .filter(Boolean)
+    .join(" ")
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": activeVariant === "impro" ? "Course" : "EducationalOccupationalCredential",
+    name: content.meta.educationTitle,
+    url: path,
+    inLanguage: content.meta.locale,
+    description
+  }
+
   return (
-    <title>{`${content.meta.educationTitle} | ${content.meta.landingTitle}`}</title>
+    <Seo
+      title={`${content.meta.educationTitle} | ${content.meta.landingTitle}`}
+      description={description}
+      pathname={path}
+      locale={content.meta.locale}
+      image={content.about?.image?.src}
+      imageAlt={content.meta.educationTitle}
+      alternates={[
+        { hrefLang: content.meta.locale, href: path },
+        {
+          hrefLang: alternateLocale,
+          href: `${alternateContent.meta.basePath}${alternateContent.nav.paths.education || "/education"}`
+        },
+        { hrefLang: "x-default", href: "/writing/education" }
+      ]}
+      schema={schema}
+    />
   )
 }

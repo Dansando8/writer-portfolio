@@ -97,7 +97,8 @@
     left: 50%;
     right: auto;
     transform: translateX(-50%);
-    bottom: 60px;
+    top: auto;
+    bottom: 90px;
     max-width: calc(100vw - 32px);
   }
 }

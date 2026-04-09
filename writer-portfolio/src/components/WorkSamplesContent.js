@@ -4,6 +4,7 @@ import MarkDownIcon from "./MarkDownIcon"
 import ContactBadge from "./ContactBadge"
 import TypewriterTitle from "./TypewriterTitle"
 import Disclaimer from "./Disclaimer"
+import Seo, { flattenRichParagraphs } from "./Seo"
 import { usePortfolioVariant } from "../hooks/usePortfolioVariant"
 import { useReloadRedirectToRoot } from "../hooks/useReloadRedirectToRoot"
 import { resolvePortfolioContent } from "../data/portfolioContent"
@@ -42,7 +43,7 @@ export function WorkSamplesContent({ translation, forcedVariant }) {
   useReloadRedirectToRoot(content.meta.basePath)
 
   return (
-    <main className={`workPage ${isSplitLayout ? "isSplitLayout" : ""}`}>
+    <main className={`workPage ${isSplitLayout ? "isSplitLayout" : ""}`} data-locale={content.meta.locale}>
       <SiteNav
         labels={content.nav}
         pathPrefix={content.meta.basePath}
@@ -175,10 +176,42 @@ export function WorkSamplesContent({ translation, forcedVariant }) {
 }
 
 export function WorkSamplesHead({ translation, forcedVariant }) {
-  const [portfolioVariant] = usePortfolioVariant()
-  const activeVariant = forcedVariant || portfolioVariant
+  const activeVariant = forcedVariant || "writing"
   const content = resolvePortfolioContent(translation.meta.locale, activeVariant)
-  return <title>{`${content.meta.workTitle} | ${content.meta.landingTitle}`}</title>
+  const path = `${content.meta.basePath}${content.nav.paths.work}`
+  const alternateLocale = content.meta.locale === "en" ? "de" : "en"
+  const alternateContent = resolvePortfolioContent(alternateLocale, activeVariant)
+  const description =
+    flattenRichParagraphs(content.work.paragraphs || []) ||
+    `${content.meta.workTitle} by ${content.contact?.name || "Amonat"}`
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": activeVariant === "impro" ? "Service" : "CreativeWork",
+    name: content.meta.workTitle,
+    url: path,
+    inLanguage: content.meta.locale,
+    description
+  }
+
+  return (
+    <Seo
+      title={`${content.meta.workTitle} | ${content.meta.landingTitle}`}
+      description={description}
+      pathname={path}
+      locale={content.meta.locale}
+      image={content.work.image?.src || content.work.items?.[0]?.logo?.src}
+      imageAlt={content.meta.workTitle}
+      alternates={[
+        { hrefLang: content.meta.locale, href: path },
+        {
+          hrefLang: alternateLocale,
+          href: `${alternateContent.meta.basePath}${alternateContent.nav.paths.work}`
+        },
+        { hrefLang: "x-default", href: "/writing/work-samples" }
+      ]}
+      schema={schema}
+    />
+  )
 }
 
 export default WorkSamplesContent

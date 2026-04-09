@@ -258,6 +258,11 @@
   font-size: clamp(24px, 7.5vw, 108px);
 }
 
+/* "Improvisational" is long — scale with viewport to prevent mobile overflow. */
+.hero[data-locale="en"][data-variant="impro"] .name {
+  font-size: clamp(24px, 9vw, 108px);
+}
+
 .tagline {
   margin: 22px 0 0;
   display: inline-block;
@@ -312,7 +317,11 @@
 
   /* keep the clamp active for the long impro title instead of the fixed 76px */
   .hero[data-locale="de"][data-variant="impro"] .name {
-    font-size: clamp(24px, 7.5vw, 108px);
+    font-size: clamp(30px, 11vw, 108px);
+  }
+
+  .hero[data-locale="en"][data-variant="impro"] .name {
+    font-size: clamp(28px, 9.8vw, 108px);
   }
 
   .heroTopBlur {
@@ -322,7 +331,7 @@
   .tagline {
     border-radius: 14px;
     padding: 14px 16px;
-    font-size: 24px;
+    font-size: clamp(17px, 5.5vw, 28px);
     line-height: 1.12;
   }
 
