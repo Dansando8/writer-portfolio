@@ -7,7 +7,7 @@
 .educationWrap {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 48px 24px 40px;
+  padding: 150px 24px 40px;
   display: grid;
   grid-template-columns: minmax(610px, 1.18fr) minmax(380px, 0.82fr);
   gap: 54px;
@@ -15,7 +15,7 @@
 }
 
 .leftCol {
-  min-height: calc(100vh - 188px);
+  min-height: calc(100vh - 290px);
   display: flex;
   flex-direction: column;
 }
@@ -33,6 +33,7 @@
 .educationPage[data-locale="de"] .eduTitle {
   font-size: clamp(62px, 6.2vw, 108px);
   line-height: 0.88;
+  max-width: 9ch;
 }
 
 .educationPage[data-locale="en"] .eduTitle {
@@ -103,6 +104,6 @@
 
 @media (max-width: 560px) {
   .educationWrap {
-    padding: 34px 16px 48px;
+    padding: 80px 16px 48px;
   }
 }

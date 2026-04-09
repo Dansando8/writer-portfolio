@@ -35,7 +35,7 @@
   z-index: 2;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 54px 24px 64px;
+  padding: 150px 24px 64px;
   display: grid;
   grid-template-columns: 1.3fr 0.9fr;
   gap: 56px;
@@ -286,7 +286,7 @@
 
 @media (max-width: 560px) {
   .aboutWrap {
-    padding: 34px 16px 76px;
+    padding: 80px 16px 76px;
   }
 
   .aboutWrap.isBackdrop .aboutTitle {

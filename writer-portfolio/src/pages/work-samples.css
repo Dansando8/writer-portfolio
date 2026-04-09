@@ -7,7 +7,7 @@
 .workWrap {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 50px 24px 82px;
+  padding: 150px 24px 82px;
 }
 
 .workSplit {
@@ -18,7 +18,7 @@
 }
 
 .workPage.isSplitLayout .workWrap {
-  padding-top: clamp(58px, 7.8vw, 104px);
+  padding-top: clamp(100px, 10.4vw, 150px);
   padding-bottom: clamp(24px, 3.2vh, 46px);
 }
 
@@ -29,6 +29,10 @@
   line-height: 0.95;
   letter-spacing: -0.02em;
   color: var(--brand-yellow);
+}
+
+.workPage[data-locale="de"]:not(.isSplitLayout) .workTitle {
+  margin-bottom: 104px;
 }
 
 .workPage.isSplitLayout .workTitle {
@@ -80,7 +84,7 @@
 .workFeatureImage {
   margin-top: 30px;
   justify-self: end;
-  width: min(520px, 100%);
+  width: min(380px, 100%);
   overflow: hidden;
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
 }
@@ -88,9 +92,7 @@
 .workFeatureImage img {
   display: block;
   width: 100%;
-  height: 590px;
-  object-fit: cover;
-  object-position: center 14%;
+  height: auto;
   filter: grayscale(100%) contrast(0.94) brightness(1.08);
 }
 
@@ -206,11 +208,7 @@
   .workFeatureImage {
     margin-top: 4px;
     justify-self: start;
-    width: min(500px, 100%);
-  }
-
-  .workFeatureImage img {
-    height: auto;
+    width: min(360px, 100%);
   }
 
   .workPage.isSplitLayout .workTitle {
@@ -266,7 +264,7 @@
 
 @media (max-width: 520px) {
   .workWrap {
-    padding: 34px 16px 84px;
+    padding: 80px 16px 160px;
   }
 
   .workTitle {

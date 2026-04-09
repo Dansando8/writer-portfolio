@@ -2,7 +2,7 @@ import * as React from "react"
 import { AboutContent, AboutHead } from "../../components/AboutContent"
 import deTranslation from "../../data/translations/de.json"
 
-export default function ImproUeberMichPage() {
+export default function UeberMichPage() {
   return <AboutContent translation={deTranslation} forcedVariant="impro" />
 }
 

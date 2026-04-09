@@ -2,6 +2,11 @@
  * @type {import('gatsby').GatsbyConfig}
  */
 
+const siteUrl =
+  process.env.GATSBY_SITE_URL ||
+  process.env.URL ||
+  `https://www.yourdomain.tld`;
+
 const gtagIdsRaw =
   process.env.GATSBY_GTAG_IDS ||
   process.env.GATSBY_GOOGLE_GTAG_TRACKING_IDS ||
@@ -17,9 +22,18 @@ const gtagTrackingIds = gtagIdsRaw
 const enableSharp = process.env.GATSBY_ENABLE_SHARP === "1";
 
 module.exports = {
+  trailingSlash: "never",
   siteMetadata: {
-    title: `writer-portfolio`,
-    siteUrl: `https://www.yourdomain.tld`
+    title: `Amonat`,
+    titleTemplate: `%s | Amonat`,
+    description:
+      `Portfolio for journalism, copywriting, UX writing, and improvisational theater workshops by Amonat.`,
+    siteUrl,
+    siteLanguage: `de`,
+    author: `Amonat`,
+    social: {
+      twitter: `@`
+    }
   },
   plugins: [
     "gatsby-plugin-styled-components",

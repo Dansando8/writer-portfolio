@@ -6,6 +6,7 @@ import TypewriterTitle from "./TypewriterTitle"
 import { requestTypewriterAudioUnlock } from "./TypewriterTitle"
 import Disclaimer from "./Disclaimer"
 import PortfolioToggle from "./PortfolioToggle"
+import Seo from "./Seo"
 import bg1600Jpg from "../images/optimized/background_writing_machine-1600.jpg"
 import bg2400Jpg from "../images/optimized/background_writing_machine-2400.jpg"
 import bg1600Webp from "../images/optimized/background_writing_machine-1600.webp"
@@ -40,7 +41,7 @@ const readEnteredState = () => {
 }
 
 const HOME_PATHS = {
-  de: { writing: "/writing", impro: "/impro" },
+  de: { writing: "/schreiben", impro: "/impro" },
   en: { writing: "/en/writing", impro: "/en/impro" }
 }
 
@@ -209,7 +210,7 @@ export function LandingContent({ translation, forcedVariant }) {
       <div className="heroTopBlur" aria-hidden="true" />
       <div className="heroShade" />
 
-      {ready && entered ? (
+      {contentVisible ? (
         <SiteNav
           labels={content.nav}
           pathPrefix={content.meta.basePath}
@@ -263,8 +264,7 @@ export function LandingContent({ translation, forcedVariant }) {
 }
 
 export function LandingHead({ translation, forcedVariant }) {
-  const [portfolioVariant] = usePortfolioVariant()
-  const activeVariant = forcedVariant || portfolioVariant
+  const activeVariant = forcedVariant || "writing"
   const content = resolvePortfolioContent(translation.meta.locale, activeVariant)
   const preloadHref =
     activeVariant === "impro" ? theater1600Webp : bg1600Webp
@@ -272,10 +272,36 @@ export function LandingHead({ translation, forcedVariant }) {
     activeVariant === "impro"
       ? `${theater1600Webp} 1600w`
       : `${bg1600Webp} 1600w, ${bg2400Webp} 2400w`
+  const path = content.meta.basePath
+  const alternateLocale = content.meta.locale === "en" ? "de" : "en"
+  const alternateContent = resolvePortfolioContent(alternateLocale, activeVariant)
+  const description = `${content.hero.taglineLines.join(" ")} ${content.contact.name}`.trim()
+  const image = activeVariant === "impro" ? theater1600Webp : bg2400Jpg
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": activeVariant === "impro" ? "ProfessionalService" : "Person",
+    name: content.contact.name,
+    url: path,
+    inLanguage: content.meta.locale,
+    description
+  }
 
   return (
     <>
-      <title>{content.meta.landingTitle}</title>
+      <Seo
+        title={content.meta.landingTitle}
+        description={description}
+        pathname={path}
+        locale={content.meta.locale}
+        image={image}
+        imageAlt={content.hero.title}
+        alternates={[
+          { hrefLang: content.meta.locale, href: path },
+          { hrefLang: alternateLocale, href: alternateContent.meta.basePath },
+          { hrefLang: "x-default", href: "/writing" }
+        ]}
+        schema={schema}
+      />
       <link
         rel="preload"
         as="image"
