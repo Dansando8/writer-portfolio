@@ -111,7 +111,7 @@
 
 .aboutWrap.isBackdrop .aboutLeftCol {
   align-self: start;
-  padding-top: clamp(76px, 8.6vh, 136px);
+  padding-top: clamp(132px, 14vh, 220px);
 }
 
 .aboutWrap.isBackdrop .aboutTitle {
@@ -142,7 +142,7 @@
   max-width: 62ch;
   width: 100%;
   justify-self: stretch;
-  margin-top: clamp(36px, 5.6vh, 86px);
+  margin-top: clamp(96px, 11vh, 176px);
 }
 
 .aboutWrap.isBackdrop .aboutParagraph {
@@ -173,7 +173,7 @@
     max-width: 58ch;
     width: 100%;
     justify-self: stretch;
-    margin-top: clamp(26px, 4.2vh, 62px);
+    margin-top: clamp(72px, 8vh, 130px);
   }
 }
 

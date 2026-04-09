@@ -14,7 +14,7 @@ import insightsLogo from "../images/Screenshot 2026-01-01 203952(1).png"
 
 const items = [
   {
-    title: "Schmerz-Studie\nueberrascht",
+    title: "Schmerz-Studie\nüberrascht",
     href: "https://www.morgenpost.de/ratgeber-wissen/article408336511/natuerliche-alternative-zu-ibu-co-schmerz-studie-ueberrascht.html",
     iconColor: "var(--brand-lilac)",
     logo: {
@@ -24,19 +24,19 @@ const items = [
     }
   },
   {
-    title: "Biomasse als\nAlleskoenner",
+    title: "Biomasse als\nAlleskönner",
     href: "https://unternehmen.tagesanzeiger.ch/energie/wie-funktioniert-biomasse-als-energielieferant",
     iconColor: "rgba(0,0,0,0.92)",
     logo: { src: tagesanzeigerLogo, alt: "Tages-Anzeiger", className: "isTages" }
   },
   {
-    title: "UX Writing for the\nE.ON\nWebsite",
+    title: "UX Writing für die\nE.ON\nWebsite",
     href: "https://www.eon.de/de/pk/hems/comfort-sichern.html?utm_source=google&utm_medium=cpc&utm_campaign=SEA_SMARTHOME_PK_PERF_COMFLEX_EWK_25&mc=0512412001&gad_source=1&gad_campaignid=22896047259&gbraid=0AAAABAqNVExau53NhcySJiDvxDVVoyj9x&gclid=Cj0KCQiA9t3KBhCQARIsAJOcR7zAp-R8EbFZQiAKRreUt3kAIlo8r_DBsiow7IlS2IlY1GFeIIFO1xYaAmZsEALw_wcB",
     iconColor: "var(--brand-lilac)",
     logo: { src: eonLogo, alt: "E.ON", className: "isSmall" }
   },
   {
-    title: "Einzelgaenger nach\nCorona Isolation?",
+    title: "Einzelgänger nach\nCorona Isolation?",
     href: "https://www.spiegel.de/psychologie/coronakrise-kann-man-das-sozialleben-verlernen-a-586c3302-0a91-4063-b528-f34629f7aca0",
     iconColor: "rgba(0,0,0,0.92)",
     logo: { src: spiegelLogo, alt: "SPIEGEL ONLINE", className: "" }

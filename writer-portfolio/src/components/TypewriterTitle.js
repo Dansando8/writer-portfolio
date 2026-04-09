@@ -92,9 +92,9 @@ function playKeystrokeSound(char, prevChar, index) {
   const now = ctx.currentTime
   const variationSeed = (charCode * 7 + index * 17 + keystrokeCount * 13) % 23
   const weight = isSpace ? 0.45 : isPunctuation ? 0.8 : 1
-  const bodyFrequency = 980 + ((charCode + variationSeed * 31) % 260)
-  const clickFrequency = 1700 + ((charCode * 3 + variationSeed * 19) % 850)
-  const ringFrequency = 130 + ((charCode * 5 + variationSeed * 11) % 70)
+  const bodyFrequency = 820 + ((charCode + variationSeed * 31) % 220)
+  const clickFrequency = 1450 + ((charCode * 3 + variationSeed * 19) % 620)
+  const ringFrequency = 120 + ((charCode * 5 + variationSeed * 11) % 55)
   const attack = 0.001
   const clickDecay = isSpace ? 0.012 : 0.018 + (variationSeed % 5) * 0.003
   const ringDecay = isPunctuation ? 0.05 : prevChar === "\n" ? 0.065 : 0.04
@@ -102,7 +102,7 @@ function playKeystrokeSound(char, prevChar, index) {
   const outputGain = ctx.createGain()
   outputGain.gain.setValueAtTime(0.0001, now)
   outputGain.gain.exponentialRampToValueAtTime(
-    (0.118 + (variationSeed % 6) * 0.009) * weight,
+    (0.182 + (variationSeed % 6) * 0.013) * weight,
     now + attack
   )
   outputGain.gain.exponentialRampToValueAtTime(0.0001, now + ringDecay)
@@ -118,14 +118,14 @@ function playKeystrokeSound(char, prevChar, index) {
 
   const clickFilter = ctx.createBiquadFilter()
   clickFilter.type = "bandpass"
-  clickFilter.frequency.setValueAtTime(1450 + variationSeed * 55, now)
-  clickFilter.Q.value = 0.7 + (variationSeed % 5) * 0.12
+  clickFilter.frequency.setValueAtTime(1180 + variationSeed * 42, now)
+  clickFilter.Q.value = 0.58 + (variationSeed % 5) * 0.08
 
   const clickGain = ctx.createGain()
   clickGain.gain.setValueAtTime(0.0001, now)
   clickGain.gain.exponentialRampToValueAtTime(
-    (isSpace ? 0.135 : 0.275) + (variationSeed % 4) * 0.022,
-    now + 0.002
+    (isSpace ? 0.19 : 0.43) + (variationSeed % 4) * 0.03,
+    now + 0.0016
   )
   clickGain.gain.exponentialRampToValueAtTime(0.0001, now + clickDecay)
 
@@ -144,8 +144,8 @@ function playKeystrokeSound(char, prevChar, index) {
   const ringGain = ctx.createGain()
   ringGain.gain.setValueAtTime(0.0001, now)
   ringGain.gain.exponentialRampToValueAtTime(
-    (isSpace ? 0.012 : 0.034) + (variationSeed % 3) * 0.0045,
-    now + 0.006
+    (isSpace ? 0.019 : 0.062) + (variationSeed % 3) * 0.0065,
+    now + 0.005
   )
   ringGain.gain.exponentialRampToValueAtTime(0.0001, now + ringDecay)
   ringOsc.connect(ringGain)
@@ -155,12 +155,12 @@ function playKeystrokeSound(char, prevChar, index) {
   noiseSource.buffer = createNoiseBuffer(ctx)
   const noiseFilter = ctx.createBiquadFilter()
   noiseFilter.type = "highpass"
-  noiseFilter.frequency.setValueAtTime(1100 + variationSeed * 42, now)
+  noiseFilter.frequency.setValueAtTime(780 + variationSeed * 30, now)
   const noiseGain = ctx.createGain()
   noiseGain.gain.setValueAtTime(0.0001, now)
   noiseGain.gain.exponentialRampToValueAtTime(
-    (isSpace ? 0.008 : 0.022) + (variationSeed % 5) * 0.0022,
-    now + 0.0015
+    (isSpace ? 0.008 : 0.024) + (variationSeed % 5) * 0.0022,
+    now + 0.0012
   )
   noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + clickDecay)
   noiseSource.connect(noiseFilter)

@@ -4,6 +4,7 @@ import SiteNav from "./SiteNav"
 import TypewriterTitle from "./TypewriterTitle"
 import Disclaimer from "./Disclaimer"
 import { usePortfolioVariant } from "../hooks/usePortfolioVariant"
+import { useReloadRedirectToRoot } from "../hooks/useReloadRedirectToRoot"
 import { resolvePortfolioContent } from "../data/portfolioContent"
 import "../pages/education.css"
 
@@ -17,6 +18,8 @@ export function EducationContent({ translation, forcedVariant }) {
   const educationEnabled = Boolean(content.nav?.education)
   const [titleDone, setTitleDone] = React.useState(false)
 
+  useReloadRedirectToRoot(content.meta.basePath)
+
   React.useEffect(() => {
     if (educationEnabled) return
     if (typeof window === "undefined") return
@@ -26,7 +29,7 @@ export function EducationContent({ translation, forcedVariant }) {
   if (!educationEnabled) return null
 
   return (
-    <main className="educationPage">
+    <main className="educationPage" data-locale={content.meta.locale}>
       <SiteNav
         labels={content.nav}
         pathPrefix={content.meta.basePath}

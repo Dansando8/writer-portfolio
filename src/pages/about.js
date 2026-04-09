@@ -36,7 +36,7 @@ export default function AboutPage() {
             <p>
               As a copywriter, I have supported projects for{" "}
               <span className="hi">
-                Bosch Hausgeraete, Matt Optik and Insights
+                Bosch Hausgeräte, Matt Optik and Insights
               </span>
               .
             </p>
@@ -45,7 +45,7 @@ export default function AboutPage() {
               <span className="hi">E.ON</span>.
             </p>
             <p>
-              Alongside my writing work, I bring experience in{" "}
+              Alongside my writing work, I have experience in{" "}
               <span className="hi">video production and filmmaking</span>, as
               well as in <span className="hi">acting and moderating</span>, both
               on camera and on stage.

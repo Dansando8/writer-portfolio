@@ -1,8 +1,6 @@
 import * as React from "react"
 import { Link } from "gatsby"
-import { navigate } from "gatsby"
 import { useLocation } from "@gatsbyjs/reach-router"
-import { playTypewriterReturnSound, playUiToggleSound } from "./TypewriterTitle"
 import "./SiteNav.css"
 
 const defaultLabels = {
@@ -16,6 +14,12 @@ const stripTrailingSlash = (value) => {
   return value === "/" ? value : value.replace(/\/$/, "")
 }
 
+const withTrailingSlash = (value) => {
+  const normalized = stripTrailingSlash(value)
+  if (!normalized || normalized === "/") return "/"
+  return `${normalized}/`
+}
+
 export default function SiteNav({
   labels = defaultLabels,
   pathPrefix = "",
@@ -25,7 +29,6 @@ export default function SiteNav({
   const educationVisible = showEducation && Boolean(labels?.education)
   const { pathname } = useLocation()
   const [open, setOpen] = React.useState(false)
-  const [pendingTo, setPendingTo] = React.useState(null)
 
   const homePath = pathPrefix || "/"
   const isImproNamespace = homePath.includes("/impro")
@@ -42,7 +45,7 @@ export default function SiteNav({
         ? "/writing"
         : ""
     const next = `${localePrefix}${namespacePrefix}${currentSuffix}`
-    return stripTrailingSlash(next) || "/"
+    return withTrailingSlash(next)
   }
   const languageOptions = [
     { code: "de", label: "DE", path: resolveLocalePath("de") },
@@ -54,7 +57,7 @@ export default function SiteNav({
     normalizedPathname !== normalizedHome &&
     normalizedPathname !== ""
 
-  const resolvePath = (suffix) => `${pathPrefix}${suffix}`
+  const resolvePath = (suffix) => withTrailingSlash(`${pathPrefix}${suffix}`)
   const getTarget = (suffix) => {
     const raw = resolvePath(suffix)
     return { raw, normalized: stripTrailingSlash(raw) }
@@ -69,7 +72,6 @@ export default function SiteNav({
   React.useEffect(() => {
     // Close the mobile menu when navigating.
     setOpen(false)
-    setPendingTo(null)
   }, [pathname])
 
   React.useEffect(() => {
@@ -80,52 +82,6 @@ export default function SiteNav({
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [open])
-
-  const ANIM_MS = 420
-
-  const onNavClick = (suffix) => (e) => {
-    if (
-      e.defaultPrevented ||
-      e.button !== 0 ||
-      e.metaKey ||
-      e.altKey ||
-      e.ctrlKey ||
-      e.shiftKey
-    ) {
-      return
-    }
-
-    const { raw: targetPath, normalized: normalizedTarget } = getTarget(suffix)
-
-    if (normalizedPathname === normalizedTarget) return
-
-    e.preventDefault()
-    playUiToggleSound(suffix.length)
-    setPendingTo(normalizedTarget)
-
-    window.setTimeout(() => {
-      navigate(targetPath)
-    }, ANIM_MS)
-  }
-
-  const onLanguageClick = (option) => (e) => {
-    if (
-      e.defaultPrevented ||
-      e.button !== 0 ||
-      e.metaKey ||
-      e.altKey ||
-      e.ctrlKey ||
-      e.shiftKey
-    ) {
-      return
-    }
-    if (locale === option.code) return
-    playUiToggleSound(option.code === "en" ? 11 : 5)
-  }
-
-  const onBackClick = () => {
-    playTypewriterReturnSound(4)
-  }
 
   return (
     <nav
@@ -148,7 +104,6 @@ export default function SiteNav({
               className="siteNavBack"
               to={homePath}
               aria-label="Back to landing page"
-              onClick={onBackClick}
             >
               &lt;
             </Link>
@@ -159,24 +114,18 @@ export default function SiteNav({
           <ul className="siteNavList">
             <li>
               <Link
-                className={`siteNavLink ${
-                  pendingTo === targets.about.normalized ? "isPending" : ""
-                }`}
+                className="siteNavLink"
                 activeClassName="isActive"
                 to={targets.about.raw}
-                onClick={onNavClick("/about")}
               >
                 {labels.about}
               </Link>
             </li>
             <li>
               <Link
-                className={`siteNavLink ${
-                  pendingTo === targets.work.normalized ? "isPending" : ""
-                }`}
+                className="siteNavLink"
                 activeClassName="isActive"
                 to={targets.work.raw}
-                onClick={onNavClick("/work-samples")}
               >
                 {labels.work}
               </Link>
@@ -184,12 +133,9 @@ export default function SiteNav({
             {educationVisible ? (
               <li>
                 <Link
-                  className={`siteNavLink ${
-                    pendingTo === targets.education.normalized ? "isPending" : ""
-                  }`}
+                  className="siteNavLink"
                   activeClassName="isActive"
                   to={targets.education.raw}
-                  onClick={onNavClick("/education")}
                 >
                   {labels.education}
                 </Link>
@@ -208,7 +154,6 @@ export default function SiteNav({
                 }`}
                 to={option.path}
                 aria-current={locale === option.code ? "page" : undefined}
-                onClick={onLanguageClick(option)}
               >
                 {option.label}
               </Link>

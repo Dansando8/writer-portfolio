@@ -5,6 +5,7 @@ import ContactBadge from "./ContactBadge"
 import TypewriterTitle from "./TypewriterTitle"
 import Disclaimer from "./Disclaimer"
 import { usePortfolioVariant } from "../hooks/usePortfolioVariant"
+import { useReloadRedirectToRoot } from "../hooks/useReloadRedirectToRoot"
 import { resolvePortfolioContent } from "../data/portfolioContent"
 import "../pages/work-samples.css"
 
@@ -37,6 +38,8 @@ export function WorkSamplesContent({ translation, forcedVariant }) {
   )
   const isSplitLayout = content.work.layout === "split"
   const [titleDone, setTitleDone] = React.useState(false)
+
+  useReloadRedirectToRoot(content.meta.basePath)
 
   return (
     <main className={`workPage ${isSplitLayout ? "isSplitLayout" : ""}`}>

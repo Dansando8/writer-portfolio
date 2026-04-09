@@ -17,7 +17,7 @@ import improPdfEn from "../images/Portfolio Impro (Englisch).pdf"
 
 const writingWorkItems = [
   {
-    title: "Schmerz-Studie\nueberrascht",
+    title: "Schmerz-Studie\nüberrascht",
     href: "https://www.morgenpost.de/ratgeber-wissen/article408336511/natuerliche-alternative-zu-ibu-co-schmerz-studie-ueberrascht.html",
     iconColor: "var(--brand-lilac)",
     logo: {
@@ -27,7 +27,7 @@ const writingWorkItems = [
     }
   },
   {
-    title: "Biomasse als\nAlleskoenner",
+    title: "Biomasse als\nAlleskönner",
     href: "https://unternehmen.tagesanzeiger.ch/energie/wie-funktioniert-biomasse-als-energielieferant",
     iconColor: "rgba(0,0,0,0.92)",
     logo: {
@@ -43,7 +43,7 @@ const writingWorkItems = [
     logo: { src: eonLogo, alt: "E.ON", className: "isSmall" }
   },
   {
-    title: "Einzelgaenger nach\nCorona Isolation?",
+    title: "Einzelgänger nach\nCorona Isolation?",
     href: "https://www.spiegel.de/psychologie/coronakrise-kann-man-das-sozialleben-verlernen-a-586c3302-0a91-4063-b528-f34629f7aca0",
     iconColor: "rgba(0,0,0,0.92)",
     logo: { src: spiegelLogo, alt: "SPIEGEL ONLINE", className: "" }
@@ -128,19 +128,19 @@ const writingSwitchByLocale = {
   de: {
     label: "Portfolio umschalten",
     writing: "Schreiben",
-    impro: "Theater Impro"
+    impro: "Impro Theater"
   },
   en: {
     label: "Switch portfolio",
     writing: "Writing",
-    impro: "Theater Impro"
+    impro: "Impro Theater"
   }
 }
 
 const improByLocale = {
   de: {
     meta: {
-      landingTitle: "Amonat | Theater Impro",
+      landingTitle: "Amonat | Impro Theater",
       aboutTitle: "Über mich",
       workTitle: "Impro Kurse",
       educationTitle: "Ausbildung",
@@ -153,8 +153,8 @@ const improByLocale = {
       education: ""
     },
     hero: {
-      title: "Improvisationstheater",
-      taglineLines: ["Teambuilding, Perspektivwechsel", "& Spontanitaet"]
+      title: "Impro Theater",
+      taglineLines: ["Teambuilding, Perspektivwechsel", "& Spontanität"]
     },
     contact: {
       title: "Kontakt",
@@ -175,7 +175,7 @@ const improByLocale = {
             highlight: false
           },
           {
-            text: "Kombination aus ueber 20 Jahren Theater- und Filmerfahrung",
+            text: "Kombination aus über 20 Jahren Theater- und Filmerfahrung",
             highlight: true
           },
           {
@@ -187,7 +187,7 @@ const improByLocale = {
             highlight: true
           },
           {
-            text: ", durch meine Ausbildung als Heilpraktikerin fuer Psychotherapie und meine Weiterbildung in Gestalttherapie, praegt meinen Blick auf Menschen und Gruppen.",
+            text: ", durch meine Ausbildung als Heilpraktikerin für Psychotherapie und meine Weiterbildung in Gestalttherapie, prägt meinen Blick auf Menschen und Gruppen.",
             highlight: false
           }
         ],
@@ -197,21 +197,21 @@ const improByLocale = {
             highlight: false
           },
           {
-            text: "Improvisationstheater",
+            text: "Impro Theater",
             highlight: true
           },
           {
-            text: ". Aus einer anfaenglichen Neugier ist eine grosse Leidenschaft geworden, aus der sich mein eigener Stil entwickelt hat.",
+            text: ". Aus einer anfänglichen Neugier ist eine große Leidenschaft geworden, aus der sich mein eigener Stil entwickelt hat.",
             highlight: false
           }
         ],
         [
           {
-            text: "Inzwischen gebe ich regelmaessige Impro-Workshops und begleite Gruppen dabei, Spielfreude, Praesenz und Mut zum Ausprobieren zu entdecken, mit Humor, Achtsamkeit und psychologischem Verstaendnis, das sich direkt auf ",
+            text: "Inzwischen gebe ich regelmäßige Impro-Workshops und begleite Gruppen dabei, Spielfreude, Präsenz und Mut zum Ausprobieren zu entdecken, mit Humor, Achtsamkeit und psychologischem Verständnis, das sich direkt auf ",
             highlight: false
           },
           {
-            text: "Alltag und Arbeitsalltag uebertragen laesst",
+            text: "Alltag und Arbeitsalltag übertragen lässt",
             highlight: true
           },
           {
@@ -231,7 +231,7 @@ const improByLocale = {
       paragraphs: [
         [
           {
-            text: "In Zeiten von KI und dauernder Erreichbarkeit wird es immer wichtiger, den Fokus bewusst auf ",
+            text: "In Zeiten von KI und ständiger Erreichbarkeit wird es immer wichtiger, den Fokus bewusst auf ",
             highlight: false
           },
           {
@@ -239,13 +239,13 @@ const improByLocale = {
             highlight: true
           },
           {
-            text: ", am besten in einem Rahmen, der komplett offline ist. Genau solche Raeume eroeffnen meine Improvisationstheater-Workshops als Teambuilding oder Gruppenevents fuer Unternehmen und Privatpersonen.",
+            text: ", am besten in einem Rahmen, der komplett offline ist. Genau solche Räume eröffnen meine Improvisationstheater-Workshops als Teambuilding oder Gruppenevents für Unternehmen und Privatpersonen.",
             highlight: false
           }
         ],
         [
           {
-            text: "Sind Sie auf der Suche nach einem Event, das begeistert, verbindet und noch lange in Erinnerung bleibt? Dann koennte ein ",
+            text: "Sind Sie auf der Suche nach einem Event, das begeistert, verbindet und noch lange in Erinnerung bleibt? Dann könnte ein ",
             highlight: false
           },
           {
@@ -253,13 +253,13 @@ const improByLocale = {
             highlight: true
           },
           {
-            text: " genau das Richtige sein. Die Kurse schaffen Leichtigkeit und foerdern den Mut zum Ausprobieren und zu Spontanitaet.",
+            text: " genau das Richtige sein. Die Kurse schaffen Leichtigkeit und fördern den Mut zum Ausprobieren und zu Spontanität.",
             highlight: false
           }
         ],
         [
           {
-            text: "Die Teilnehmenden erleben ausserdem, wie \"Scheitern als Chance\" gelingen kann und wie sich durch gemeinsames Spiel Agilitaet, Vertrauen und Miteinander im Alltag deutlich verbessern lassen.",
+            text: "Die Teilnehmenden erleben außerdem, wie \"Scheitern als Chance\" gelingen kann und wie sich durch gemeinsames Spiel Agilität, Vertrauen und Miteinander im Alltag deutlich verbessern lassen.",
             highlight: false
           }
         ]
@@ -280,7 +280,7 @@ const improByLocale = {
         {
           institution: "Psychotherapeutischer Hintergrund",
           details: [
-            "Heilpraktikerin fuer Psychotherapie",
+            "Heilpraktikerin für Psychotherapie",
             "Weiterbildung in Gestalttherapie"
           ]
         },
@@ -288,21 +288,21 @@ const improByLocale = {
           institution: "Improvisationstheater Fokus",
           details: [
             "Seit 9 Jahren Schwerpunkt auf Improvisationstheater",
-            "Regelmaessige Impro-Workshops fuer Gruppen und Teams"
+            "Regelmaessige Impro-Workshops für Gruppen und Teams"
           ]
         }
       ],
       footer: {
         title: "Ansatz",
         description:
-          "Humor, Achtsamkeit und psychologisches Verstaendnis mit direktem Transfer in Alltag und Arbeitsalltag."
+          "Humor, Achtsamkeit und psychologisches Verständnis mit direktem Transfer in Alltag und Arbeitsalltag."
       }
     },
     portfolioSwitch: writingSwitchByLocale.de
   },
   en: {
     meta: {
-      landingTitle: "Amonat | Theater Impro",
+      landingTitle: "Amonat | Impro Theater",
       aboutTitle: "About Me",
       workTitle: "Impro Classes",
       educationTitle: "Education",
@@ -349,7 +349,7 @@ const improByLocale = {
             highlight: true
           },
           {
-            text: ", derived from my training as a Heilpraktiker fuer Psychotherapie and my advanced studies in Gestalt therapy, informs my perspective on individuals and groups.",
+            text: ", derived from my training as a Heilpraktiker für Psychotherapie and my advanced studies in Gestalt therapy, informs my perspective on individuals and groups.",
             highlight: false
           }
         ],
@@ -442,7 +442,7 @@ const improByLocale = {
         {
           institution: "Psychotherapeutic Background",
           details: [
-            "Training as Heilpraktiker fuer Psychotherapie",
+            "Training as Heilpraktiker für Psychotherapie",
             "Advanced studies in Gestalt therapy"
           ]
         },

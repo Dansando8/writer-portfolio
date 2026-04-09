@@ -31,10 +31,19 @@
 }
 
 .loaderOverlay.isEnterGate {
-  background:
-    linear-gradient(180deg, rgba(12, 12, 14, 0.78) 0%, rgba(12, 12, 14, 0.9) 100%),
-    radial-gradient(1200px 700px at 40% 40%, #36363a 0%, #141416 55%, #0c0c0e 100%);
-  backdrop-filter: blur(10px) grayscale(100%);
+  background: linear-gradient(
+    180deg,
+    rgba(12, 12, 14, 0.3) 0%,
+    rgba(12, 12, 14, 0.46) 100%
+  );
+  -webkit-backdrop-filter: blur(18px) grayscale(100%) brightness(0.78);
+  backdrop-filter: blur(18px) grayscale(100%) brightness(0.78);
+  transition: opacity 420ms ease, visibility 0ms linear 420ms;
+}
+
+.loaderOverlay.isEnterGate.isDissolving {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .loaderGateInner {
@@ -43,35 +52,66 @@
 }
 
 .loaderEnterButton {
+  position: relative;
   appearance: none;
-  border: 1px solid rgba(255, 228, 92, 0.8);
-  background: rgba(20, 20, 22, 0.66);
-  color: var(--brand-yellow);
-  min-width: 180px;
-  padding: 16px 32px;
-  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  background: rgba(12, 12, 14, 0.12);
+  color: rgba(255, 255, 255, 0.92);
+  min-width: 164px;
+  padding: 8px 18px;
+  border-radius: 3px;
   font: inherit;
-  font-size: clamp(18px, 2vw, 28px);
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 400;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  text-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
   transition:
-    transform 160ms ease,
-    background-color 160ms ease,
-    box-shadow 160ms ease;
+    transform 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+  z-index: 0;
 }
 
-.loaderEnterButton:hover {
+.loaderEnterButton::after {
+  content: "";
+  position: absolute;
+  inset: -4px -10px;
+  background: var(--brand-yellow);
+  border-radius: 3px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  opacity: 0.96;
+  transition: transform 420ms ease;
+  z-index: -1;
+}
+
+.loaderEnterButton:hover,
+.loaderEnterButton:focus-visible {
+  color: rgba(20, 20, 22, 0.96);
   transform: translateY(-1px);
-  background: rgba(38, 38, 42, 0.82);
-  box-shadow: 0 16px 46px rgba(0, 0, 0, 0.42);
+  border-color: rgba(255, 255, 255, 0.96);
+  background: rgba(12, 12, 14, 0.04);
+}
+
+.loaderEnterButton:hover::after,
+.loaderEnterButton:focus-visible::after {
+  transform: scaleX(1);
 }
 
 .loaderEnterButton:focus-visible {
-  outline: 2px solid rgba(255, 228, 92, 0.85);
-  outline-offset: 4px;
+  outline: none;
+}
+
+@media (max-width: 560px) {
+  .loaderEnterButton {
+    min-width: 140px;
+    font-size: 20px;
+    padding: 7px 14px;
+  }
 }
 
 .loaderTextTyped {

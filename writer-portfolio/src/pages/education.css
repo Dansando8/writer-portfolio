@@ -23,10 +23,22 @@
 .eduTitle {
   margin: 0;
   font-weight: 800;
-  font-size: clamp(86px, 8.9vw, 146px);
+  font-size: clamp(78px, 7.9vw, 132px);
   line-height: 0.84;
   letter-spacing: -0.03em;
   color: var(--brand-yellow);
+  max-width: 7.4ch;
+}
+
+.educationPage[data-locale="de"] .eduTitle {
+  font-size: clamp(62px, 6.2vw, 108px);
+  line-height: 0.88;
+}
+
+.educationPage[data-locale="en"] .eduTitle {
+  font-size: clamp(64px, 6.5vw, 112px);
+  line-height: 0.88;
+  max-width: 12ch;
 }
 
 .leftFoot {

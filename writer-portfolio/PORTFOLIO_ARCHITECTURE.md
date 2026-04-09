@@ -3,7 +3,7 @@
 ## Goal
 Keep one shared site UI and routing, while serving two content variants:
 - `writing` (existing content, kept as canonical baseline)
-- `impro` (new Theater Impro content)
+- `impro` (new Impro Theater content)
 
 The site remains bilingual (`de`, `en`) and supports both languages for both portfolio variants.
 

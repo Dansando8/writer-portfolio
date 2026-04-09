@@ -3,6 +3,7 @@ import SiteNav from "./SiteNav"
 import TypewriterTitle from "./TypewriterTitle"
 import Disclaimer from "./Disclaimer"
 import { usePortfolioVariant } from "../hooks/usePortfolioVariant"
+import { useReloadRedirectToRoot } from "../hooks/useReloadRedirectToRoot"
 import { resolvePortfolioContent } from "../data/portfolioContent"
 import "../pages/about.css"
 
@@ -15,6 +16,8 @@ export function AboutContent({ translation, forcedVariant }) {
   )
   const isBackdropLayout = content.about.layout === "backdrop"
   const [titleDone, setTitleDone] = React.useState(false)
+
+  useReloadRedirectToRoot(content.meta.basePath)
 
   return (
     <main

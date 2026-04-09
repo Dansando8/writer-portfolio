@@ -17,6 +17,7 @@ import { resolvePortfolioContent } from "../data/portfolioContent"
 import "../pages/index.css"
 
 const DEFAULT_LOADER_DELAY_MS = 2500
+const ENTERED_STORAGE_KEY = "portfolioAudioEntered"
 
 const getLoaderDelay = () => {
   if (typeof window === "undefined") return DEFAULT_LOADER_DELAY_MS
@@ -26,6 +27,24 @@ const getLoaderDelay = () => {
 }
 
 const isLoaderDebug = () => getLoaderDelay() === 120000
+
+const readEnteredState = () => {
+  if (typeof window === "undefined") return false
+  try {
+    return window.sessionStorage.getItem(ENTERED_STORAGE_KEY) === "1"
+  } catch {
+    return false
+  }
+}
+
+const persistEnteredState = () => {
+  if (typeof window === "undefined") return
+  try {
+    window.sessionStorage.setItem(ENTERED_STORAGE_KEY, "1")
+  } catch {
+    // Ignore storage failures.
+  }
+}
 
 const HOME_PATHS = {
   de: { writing: "/writing", impro: "/impro" },
@@ -74,7 +93,8 @@ export function LandingContent({ translation, forcedVariant }) {
   }, [portfolioVariant])
   const heroImgRef = React.useRef(null)
   const [ready, setReady] = React.useState(false)
-  const [entered, setEntered] = React.useState(false)
+  const [entered, setEntered] = React.useState(readEnteredState)
+  const [enterDissolving, setEnterDissolving] = React.useState(false)
   const [imgLoaded, setImgLoaded] = React.useState(false)
   const [titleDone, setTitleDone] = React.useState(false)
   const [contentVisible, setContentVisible] = React.useState(false)
@@ -91,6 +111,11 @@ export function LandingContent({ translation, forcedVariant }) {
     if (!imgLoaded || isLoaderDebug()) return
     setReady(true)
   }, [imgLoaded])
+
+  React.useEffect(() => {
+    if (!entered) return
+    persistEnteredState()
+  }, [entered])
 
   React.useEffect(() => {
     if (!ready || !entered) setTitleDone(false)
@@ -140,15 +165,25 @@ export function LandingContent({ translation, forcedVariant }) {
             <span className="loaderCaret" aria-hidden="true" />
           </div>
         </div>
-      ) : !entered ? (
-        <div className="loaderOverlay isEnterGate" role="dialog" aria-modal="true">
+      ) : !entered || enterDissolving ? (
+        <div
+          className={`loaderOverlay isEnterGate ${
+            enterDissolving ? "isDissolving" : ""
+          }`}
+          role={entered ? undefined : "dialog"}
+          aria-modal={entered ? undefined : "true"}
+          aria-hidden={entered ? "true" : undefined}
+        >
           <div className="loaderGateInner">
             <button
               type="button"
               className="loaderEnterButton"
               onClick={() => {
+                if (enterDissolving) return
                 requestTypewriterAudioUnlock()
                 setEntered(true)
+                setEnterDissolving(true)
+                window.setTimeout(() => setEnterDissolving(false), 420)
               }}
             >
               {enterLabel}
