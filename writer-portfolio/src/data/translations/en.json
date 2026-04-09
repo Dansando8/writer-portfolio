@@ -36,7 +36,7 @@
       ],
       [
         { "text": "As a copywriter, I have supported projects for ", "highlight": false },
-        { "text": "Bosch Hausgeraete, Matt Optik and Insights", "highlight": true },
+        { "text": "Bosch Hausgeräte, Matt Optik and Insights", "highlight": true },
         { "text": ".", "highlight": false }
       ],
       [
@@ -45,7 +45,7 @@
         { "text": ".", "highlight": false }
       ],
       [
-        { "text": "Alongside my writing work, I bring experience in ", "highlight": false },
+        { "text": "Alongside my writing work, I have experience in ", "highlight": false },
         { "text": "video production and filmmaking", "highlight": true },
         { "text": ", as well as in ", "highlight": false },
         { "text": "acting and moderating", "highlight": true },
@@ -58,7 +58,7 @@
   },
   "disclaimer": "All rights reserved Amonat 2026",
   "education": {
-    "title": "My Education",
+    "title": "My\nEducation",
     "training": [
       {
         "institution": "Humboldt University Berlin",

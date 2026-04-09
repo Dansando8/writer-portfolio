@@ -1,9 +1,9 @@
 import * as React from "react"
 import { navigate } from "gatsby"
 
-export default function EducationRedirectPage() {
+export default function WritingEducationRedirectPage() {
   React.useEffect(() => {
-    navigate("/writing/education", { replace: true })
+    navigate("/schreiben/ausbildung", { replace: true })
   }, [])
   return null
 }

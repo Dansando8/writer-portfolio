@@ -4,146 +4,181 @@ import MarkDownIcon from "./MarkDownIcon"
 import ContactBadge from "./ContactBadge"
 import TypewriterTitle from "./TypewriterTitle"
 import Disclaimer from "./Disclaimer"
+import { usePortfolioVariant } from "../hooks/usePortfolioVariant"
+import { useReloadRedirectToRoot } from "../hooks/useReloadRedirectToRoot"
+import { resolvePortfolioContent } from "../data/portfolioContent"
 import "../pages/work-samples.css"
 
-import morgenpostLogo from "../images/Berlinermorgenpostlogo(1).jpg"
-import tagesanzeigerLogo from "../images/tages-anzeiger.jpg"
-import eonLogo from "../images/EON_Logo.svg(1).png"
-import spiegelLogo from "../images/2000px-Spiegel-Online-Logo.svg.png"
-import mattLogo from "../images/matt(1).png"
-import insightsLogo from "../images/Screenshot 2026-01-01 203952(1).png"
-
-const items = [
-  {
-    title: "Schmerz-Studie\nueberrascht",
-    href: "https://www.morgenpost.de/ratgeber-wissen/article408336511/natuerliche-alternative-zu-ibu-co-schmerz-studie-ueberrascht.html",
-    iconColor: "var(--brand-lilac)",
-    logo: {
-      src: morgenpostLogo,
-      alt: "Berliner Morgenpost",
-      className: "isMorgenpost"
-    }
-  },
-  {
-    title: "Biomasse als\nAlleskoenner",
-    href: "https://unternehmen.tagesanzeiger.ch/energie/wie-funktioniert-biomasse-als-energielieferant",
-    iconColor: "rgba(0,0,0,0.92)",
-    logo: { src: tagesanzeigerLogo, alt: "Tages-Anzeiger", className: "isTages" }
-  },
-  {
-    title: "UX Writing for the\nE.ON\nWebsite",
-    href: "https://www.eon.de/de/pk/hems/comfort-sichern.html?utm_source=google&utm_medium=cpc&utm_campaign=SEA_SMARTHOME_PK_PERF_COMFLEX_EWK_25&mc=0512412001&gad_source=1&gad_campaignid=22896047259&gbraid=0AAAABAqNVExau53NhcySJiDvxDVVoyj9x&gclid=Cj0KCQiA9t3KBhCQARIsAJOcR7zAp-R8EbFZQiAKRreUt3kAIlo8r_DBsiow7IlS2IlY1GFeIIFO1xYaAmZsEALw_wcB",
-    iconColor: "var(--brand-lilac)",
-    logo: { src: eonLogo, alt: "E.ON", className: "isSmall" }
-  },
-  {
-    title: "Einzelgaenger nach\nCorona Isolation?",
-    href: "https://www.spiegel.de/psychologie/coronakrise-kann-man-das-sozialleben-verlernen-a-586c3302-0a91-4063-b528-f34629f7aca0",
-    iconColor: "rgba(0,0,0,0.92)",
-    logo: { src: spiegelLogo, alt: "SPIEGEL ONLINE", className: "" }
+function renderParagraph(paragraph, paragraphIndex) {
+  if (Array.isArray(paragraph)) {
+    return (
+      <p key={`rich-${paragraphIndex}`}>
+        {paragraph.map((segment, segmentIndex) =>
+          segment.highlight ? (
+            <span key={segmentIndex} className="workHi">
+              {segment.text}
+            </span>
+          ) : (
+            <React.Fragment key={segmentIndex}>{segment.text}</React.Fragment>
+          )
+        )}
+      </p>
+    )
   }
-]
 
-export function WorkSamplesContent({ translation }) {
+  return <p key={`plain-${paragraphIndex}`}>{paragraph}</p>
+}
+
+export function WorkSamplesContent({ translation, forcedVariant }) {
+  const [portfolioVariant] = usePortfolioVariant()
+  const activeVariant = forcedVariant || portfolioVariant
+  const content = React.useMemo(
+    () => resolvePortfolioContent(translation.meta.locale, activeVariant),
+    [translation.meta.locale, activeVariant]
+  )
+  const isSplitLayout = content.work.layout === "split"
   const [titleDone, setTitleDone] = React.useState(false)
 
-  return (
-    <main className="workPage">
-      <SiteNav
-        labels={translation.nav}
-        pathPrefix={translation.meta.basePath}
-        locale={translation.meta.locale}
-      />
+  useReloadRedirectToRoot(content.meta.basePath)
 
-      <section className="workWrap">
-        <TypewriterTitle
-          as="h1"
-          className="workTitle"
-          text={translation.work.title}
-          onDone={() => setTitleDone(true)}
+  return (
+    <main className={`workPage ${isSplitLayout ? "isSplitLayout" : ""}`}>
+      <SiteNav
+        labels={content.nav}
+        pathPrefix={content.meta.basePath}
+        locale={content.meta.locale}
+          showEducation={Boolean(content.nav?.education)}
         />
 
-        <div className={`grid reveal ${titleDone ? "isVisible" : ""}`}>
-          {items.map((it) => (
-            <article key={it.href} className="card">
-              <div className="iconSlot">
-                <a
-                  href={it.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={it.title.replace(/\n/g, " ")}
-                >
-                  <MarkDownIcon color={it.iconColor} size={76} />
-                </a>
+      <section className="workWrap">
+        {isSplitLayout ? (
+          <div className="workSplit">
+            <div>
+              <TypewriterTitle
+                as="h1"
+                className="workTitle"
+                text={content.work.title}
+                onDone={() => setTitleDone(true)}
+              />
+              <div className={`workIntro reveal ${titleDone ? "isVisible" : ""}`}>
+                {content.work.paragraphs.map((paragraph, index) =>
+                  renderParagraph(paragraph, index)
+                )}
               </div>
+            </div>
 
-              <a href={it.href} target="_blank" rel="noreferrer">
-                <h2 className="cardTitle">
-                  {it.title.split("\n").map((line, idx, arr) => (
-                    <React.Fragment key={idx}>
-                      {line}
-                      {idx < arr.length - 1 ? <br /> : null}
-                    </React.Fragment>
-                  ))}
-                </h2>
-              </a>
-
-              <div className="logoSlot">
-                <a href={it.href} target="_blank" rel="noreferrer">
-                  <img
-                    className={`logoImg ${it.logo.className || ""}`}
-                    src={it.logo.src}
-                    alt={it.logo.alt}
-                    loading="lazy"
-                  />
-                </a>
-              </div>
-            </article>
-          ))}
-        </div>
-
-        <div
-          className={`bottomLogos reveal ${titleDone ? "isVisible" : ""}`}
-          aria-label="More work"
-        >
-          <a
-            className="bottomLogo bottomLogoMatt"
-            href="https://matt.de/"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="MATT"
-          >
-            <img className="bottomLogoImg isMatt" src={mattLogo} alt="MATT" />
-          </a>
-
-          <a
-            className="bottomLogo bottomLogoInsights"
-            href="https://www.insights.com/de/"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="insights"
-          >
-            <img
-              className="bottomLogoImg isInsights"
-              src={insightsLogo}
-              alt="insights"
+            <div
+              className={`workFeatureImage reveal ${titleDone ? "isVisible" : ""}`}
+              aria-hidden="true"
+            >
+              <img
+                src={content.work.image?.src}
+                alt={content.work.image?.alt || ""}
+                loading="lazy"
+              />
+            </div>
+          </div>
+        ) : (
+          <>
+            <TypewriterTitle
+              as="h1"
+              className="workTitle"
+              text={content.work.title}
+              onDone={() => setTitleDone(true)}
             />
-          </a>
-        </div>
+
+            {(content.work.paragraphs || []).length > 0 ? (
+              <div className={`workIntro reveal ${titleDone ? "isVisible" : ""}`}>
+                {content.work.paragraphs.map((paragraph, index) =>
+                  renderParagraph(paragraph, index)
+                )}
+              </div>
+            ) : null}
+
+            <div className={`grid reveal ${titleDone ? "isVisible" : ""}`}>
+              {content.work.items.map((it) => (
+                <article key={it.href} className="card">
+                  <div className="iconSlot">
+                    <a
+                      href={it.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={it.title.replace(/\n/g, " ")}
+                    >
+                      <MarkDownIcon color={it.iconColor} size={76} />
+                    </a>
+                  </div>
+
+                  <a href={it.href} target="_blank" rel="noreferrer">
+                    <h2 className="cardTitle">
+                      {it.title.split("\n").map((line, idx, arr) => (
+                        <React.Fragment key={idx}>
+                          {line}
+                          {idx < arr.length - 1 ? <br /> : null}
+                        </React.Fragment>
+                      ))}
+                    </h2>
+                  </a>
+
+                  <div className="logoSlot">
+                    <a href={it.href} target="_blank" rel="noreferrer">
+                      <img
+                        className={`logoImg ${it.logo.className || ""}`}
+                        src={it.logo.src}
+                        alt={it.logo.alt}
+                        loading="lazy"
+                      />
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            {(content.work.bottomLogos || []).length > 0 ? (
+              <div
+                className={`bottomLogos reveal ${titleDone ? "isVisible" : ""}`}
+                aria-label="More work"
+              >
+                {(content.work.bottomLogos || []).map((logo) => (
+                  <a
+                    key={logo.href}
+                    className={`bottomLogo ${logo.wrapperClassName || ""}`}
+                    href={logo.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={logo.ariaLabel || logo.alt}
+                  >
+                    <img
+                      className={`bottomLogoImg ${logo.className || ""}`}
+                      src={logo.src}
+                      alt={logo.alt}
+                      loading="lazy"
+                    />
+                  </a>
+                ))}
+              </div>
+            ) : null}
+          </>
+        )}
       </section>
 
-      <ContactBadge
-        floating
-        className={`reveal ${titleDone ? "isVisible" : ""}`}
-        strings={translation.contact}
-      />
-      <Disclaimer text={translation.disclaimer} />
+      {!isSplitLayout ? (
+        <ContactBadge
+          floating
+          className={`reveal ${titleDone ? "isVisible" : ""}`}
+          strings={content.contact}
+        />
+      ) : null}
+      <Disclaimer text={content.disclaimer} />
     </main>
   )
 }
 
-export function WorkSamplesHead({ translation }) {
-  return <title>{`${translation.meta.workTitle} | Amonat`}</title>
+export function WorkSamplesHead({ translation, forcedVariant }) {
+  const [portfolioVariant] = usePortfolioVariant()
+  const activeVariant = forcedVariant || portfolioVariant
+  const content = resolvePortfolioContent(translation.meta.locale, activeVariant)
+  return <title>{`${content.meta.workTitle} | ${content.meta.landingTitle}`}</title>
 }
 
 export default WorkSamplesContent

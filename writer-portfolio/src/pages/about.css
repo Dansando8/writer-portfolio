@@ -2,9 +2,37 @@
   min-height: 100vh;
   background: #2b2b2d;
   color: rgba(255, 255, 255, 0.86);
+  position: relative;
+  overflow: hidden;
+}
+
+.aboutBackdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: grayscale(100%) contrast(1.02) brightness(0.62);
+}
+
+.aboutPageBackdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(16, 16, 18, 0.58) 0%,
+    rgba(16, 16, 18, 0.44) 44%,
+    rgba(16, 16, 18, 0.3) 100%
+  );
 }
 
 .aboutWrap {
+  position: relative;
+  z-index: 2;
   max-width: 1240px;
   margin: 0 auto;
   padding: 54px 24px 64px;
@@ -12,6 +40,36 @@
   grid-template-columns: 1.3fr 0.9fr;
   gap: 56px;
   align-items: start;
+}
+
+.aboutWrap:not(.isBackdrop) .aboutLeftCol {
+  grid-area: title;
+}
+
+.aboutWrap:not(.isBackdrop) .aboutText {
+  grid-area: text;
+  max-width: 760px;
+  margin-top: -6px;
+  font-size: 17px;
+  line-height: 1.46;
+}
+
+.aboutWrap:not(.isBackdrop) .aboutText p {
+  margin: 0 0 20px;
+}
+
+.aboutWrap:not(.isBackdrop) .rightImage {
+  grid-area: image;
+  margin-top: 0;
+  width: min(390px, 100%);
+}
+
+.aboutWrap:not(.isBackdrop) {
+  grid-template-columns: minmax(620px, 1.22fr) minmax(330px, 0.78fr);
+  grid-template-areas:
+    "title image"
+    "text image";
+  gap: 44px;
 }
 
 .aboutTitle {
@@ -38,6 +96,87 @@
   font-weight: 800;
 }
 
+.aboutWrap.isBackdrop {
+  min-height: calc(100vh - 148px);
+  grid-template-columns: minmax(360px, 1.12fr) minmax(520px, 1fr);
+  gap: clamp(18px, 2.1vw, 36px);
+  align-items: start;
+  padding-top: clamp(36px, 4.6vw, 64px);
+  padding-bottom: clamp(44px, 6.5vw, 84px);
+}
+
+.aboutPage[data-locale="de"] .aboutWrap.isBackdrop {
+  grid-template-columns: minmax(460px, 1.2fr) minmax(500px, 0.96fr);
+}
+
+.aboutWrap.isBackdrop .aboutLeftCol {
+  align-self: start;
+  padding-top: clamp(132px, 14vh, 220px);
+}
+
+.aboutWrap.isBackdrop .aboutTitle {
+  margin: 0;
+  font-size: clamp(68px, 8.2vw, 152px);
+  line-height: 0.9;
+  white-space: nowrap;
+  width: max-content;
+}
+
+.aboutWrap.isBackdrop .aboutTitle .twGhost,
+.aboutWrap.isBackdrop .aboutTitle .twText {
+  white-space: nowrap;
+}
+
+.aboutPage[data-locale="de"] .aboutWrap.isBackdrop .aboutTitle {
+  font-size: clamp(58px, 7vw, 126px);
+}
+
+.aboutPage[data-locale="en"] .aboutWrap.isBackdrop .aboutTitle {
+  font-size: clamp(58px, 6.5vw, 122px);
+}
+
+.aboutWrap.isBackdrop .aboutText {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: clamp(17px, 1.3vw, 22px);
+  line-height: 1.4;
+  max-width: 62ch;
+  width: 100%;
+  justify-self: stretch;
+  margin-top: clamp(96px, 11vh, 176px);
+}
+
+.aboutWrap.isBackdrop .aboutParagraph {
+  margin: 0 0 18px;
+}
+
+.aboutWrap.isBackdrop .aboutText p {
+  background: rgba(10, 10, 12, 0.75);
+  display: inline;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0.12em 0.28em;
+  border-radius: 0;
+}
+
+@media (max-width: 1280px) {
+  .aboutWrap.isBackdrop {
+    grid-template-columns: minmax(320px, 1.05fr) minmax(450px, 1fr);
+  }
+
+  .aboutPage[data-locale="de"] .aboutWrap.isBackdrop {
+    grid-template-columns: minmax(390px, 1.12fr) minmax(420px, 0.98fr);
+  }
+
+  .aboutWrap.isBackdrop .aboutText {
+    font-size: clamp(16px, 1.2vw, 20px);
+    line-height: 1.4;
+    max-width: 58ch;
+    width: 100%;
+    justify-self: stretch;
+    margin-top: clamp(72px, 8vh, 130px);
+  }
+}
+
 .rightImage {
   /* Align the image higher so it starts near the title like the mock. */
   margin-top: 28px;
@@ -59,10 +198,74 @@
   filter: grayscale(100%) contrast(0.85) brightness(1.35);
 }
 
+/* Non-backdrop needs to stack earlier: minmax(620,…)+minmax(330,…)+44gap = 994px min,
+   which overflows at viewports below ~1042px (e.g. iPad landscape 1024px). */
+@media (max-width: 1060px) {
+  .aboutWrap:not(.isBackdrop) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "text"
+      "image";
+    gap: 32px;
+  }
+
+  .aboutWrap:not(.isBackdrop) .aboutText,
+  .aboutWrap:not(.isBackdrop) .rightImage {
+    grid-area: auto;
+    max-width: 100%;
+    margin-top: 0;
+  }
+
+  .aboutWrap:not(.isBackdrop) .rightImage img {
+    height: auto;
+  }
+}
+
 @media (max-width: 980px) {
   .aboutWrap {
     grid-template-columns: 1fr;
     gap: 32px;
+  }
+
+  .aboutWrap.isBackdrop {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-top: 36px;
+    padding-bottom: 86px;
+  }
+
+  .aboutWrap.isBackdrop .aboutTitle {
+    font-size: clamp(50px, 12.8vw, 86px);
+    line-height: 0.96;
+    white-space: normal;
+    width: auto;
+  }
+
+  .aboutWrap.isBackdrop .aboutTitle .twGhost,
+  .aboutWrap.isBackdrop .aboutTitle .twText {
+    white-space: pre-line;
+  }
+
+  .aboutPage[data-locale="de"] .aboutWrap.isBackdrop .aboutTitle {
+    font-size: clamp(48px, 11vw, 78px);
+  }
+
+  .aboutPage[data-locale="en"] .aboutWrap.isBackdrop .aboutTitle {
+    font-size: clamp(48px, 11vw, 78px);
+  }
+
+  .aboutWrap.isBackdrop .aboutLeftCol {
+    padding-top: 0;
+  }
+
+  .aboutWrap.isBackdrop .aboutText {
+    font-size: clamp(15px, 2.8vw, 20px);
+    line-height: 1.38;
+    max-width: 100%;
+    margin-top: 2px;
+    justify-self: start;
   }
 
   .rightImage {
@@ -72,5 +275,34 @@
 
   .rightImage img {
     height: auto;
+  }
+}
+
+@media (min-width: 981px) {
+  .aboutWrap:not(.isBackdrop) .rightImage img {
+    height: clamp(500px, 62vh, 560px);
+  }
+}
+
+@media (max-width: 560px) {
+  .aboutWrap {
+    padding: 34px 16px 76px;
+  }
+
+  .aboutWrap.isBackdrop .aboutTitle {
+    font-size: clamp(42px, 14.5vw, 62px);
+  }
+
+  .aboutPage[data-locale="en"] .aboutWrap.isBackdrop .aboutTitle {
+    font-size: clamp(38px, 12.2vw, 54px);
+  }
+
+  .aboutWrap.isBackdrop .aboutParagraph {
+    margin-bottom: 14px;
+  }
+
+  .aboutWrap.isBackdrop .aboutText p {
+    border-radius: 0;
+    padding: 0.1em 0.22em;
   }
 }

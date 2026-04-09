@@ -25,34 +25,29 @@
     "title": "Über mich",
     "paragraphs": [
       [
-        {
-          "text": "Seit über acht Jahren bin ich im Bereich Content-Erstellung tätig und lege dabei großen Wert auf klare, gut strukturierte und zielgruppenorientierte Texte für verschiedene Formate und Kanäle.",
-          "highlight": false
-        }
+        { "text": "Seit ", "highlight": false },
+        { "text": "über acht Jahren", "highlight": true },
+        { "text": " bin ich im Bereich Content-Erstellung tätig und lege dabei großen Wert auf klare, gut strukturierte und zielgruppenorientierte Texte für verschiedene Formate und Kanäle.", "highlight": false }
       ],
       [
-        {
-          "text": "Als Journalistin habe ich u.a. für DIE ZEIT, DER SPIEGEL, DIE WELT und die Berliner Morgenpost gearbeitet und über diverse Themen wie Psychologie und Gesundheit geschrieben.",
-          "highlight": false
-        }
+        { "text": "Als Journalistin habe ich u.a. für ", "highlight": false },
+        { "text": "DIE ZEIT, DER SPIEGEL, DIE WELT und die Berliner Morgenpost", "highlight": true },
+        { "text": " gearbeitet und über diverse Themen wie Psychologie und Nachhaltigkeit geschrieben.", "highlight": false }
       ],
       [
-        {
-          "text": "Als Copywriterin habe ich für Firmen wie Bosch Hausgeräte, Matt Optik und Insights getextet.",
-          "highlight": false
-        }
+        { "text": "Als Copywriterin habe ich für Firmen wie ", "highlight": false },
+        { "text": "Bosch Hausgeräte, Matt Optik und Insights", "highlight": true },
+        { "text": " getextet.", "highlight": false }
       ],
       [
-        {
-          "text": "Im Bereich UX-Writing habe ich zuletzt für E.ON gearbeitet.",
-          "highlight": false
-        }
+        { "text": "Im Bereich UX-Writing habe ich zuletzt für ", "highlight": false },
+        { "text": "E.ON", "highlight": true },
+        { "text": " gearbeitet.", "highlight": false }
       ],
       [
-        {
-          "text": "Zusätzlich bringe ich Erfahrung in der Filmproduktion, Schauspielerei und Moderation mit, sowohl vor der Kamera als auch auf der Bühne.",
-          "highlight": false
-        }
+        { "text": "Zusätzlich bringe ich Erfahrung in der ", "highlight": false },
+        { "text": "Filmproduktion, Schauspielerei und Moderation", "highlight": true },
+        { "text": " mit, sowohl vor der Kamera als auch auf der Bühne.", "highlight": false }
       ]
     ]
   },

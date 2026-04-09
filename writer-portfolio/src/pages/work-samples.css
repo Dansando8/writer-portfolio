@@ -7,11 +7,23 @@
 .workWrap {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 54px 24px 110px;
+  padding: 50px 24px 82px;
+}
+
+.workSplit {
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.workPage.isSplitLayout .workWrap {
+  padding-top: clamp(58px, 7.8vw, 104px);
+  padding-bottom: clamp(24px, 3.2vh, 46px);
 }
 
 .workTitle {
-  margin: 10px 0 62px;
+  margin: 0 0 72px;
   font-weight: 800;
   font-size: clamp(64px, 7.2vw, 116px);
   line-height: 0.95;
@@ -19,10 +31,80 @@
   color: var(--brand-yellow);
 }
 
+.workPage.isSplitLayout .workTitle {
+  margin: 0 0 48px;
+  font-size: clamp(52px, 6.9vw, 108px);
+  line-height: 0.92;
+  white-space: nowrap;
+  width: max-content;
+}
+
+.workPage.isSplitLayout .workTitle .twGhost,
+.workPage.isSplitLayout .workTitle .twText {
+  white-space: nowrap;
+}
+
+.workIntro {
+  margin: -22px 0 44px;
+  max-width: 980px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 20px;
+  line-height: 1.62;
+}
+
+.workIntro p {
+  margin: 0 0 16px;
+}
+
+.workPage.isSplitLayout .workIntro {
+  margin: 0;
+  max-width: 100%;
+  font-size: clamp(16px, 1.2vw, 20px);
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.workPage.isSplitLayout .workIntro p {
+  margin: 0 0 12px;
+}
+
+.workPage.isSplitLayout .workIntro p:last-child {
+  margin-bottom: 0;
+}
+
+.workHi {
+  color: var(--brand-lilac);
+  font-weight: 800;
+}
+
+.workFeatureImage {
+  margin-top: 30px;
+  justify-self: end;
+  width: min(520px, 100%);
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+}
+
+.workFeatureImage img {
+  display: block;
+  width: 100%;
+  height: 590px;
+  object-fit: cover;
+  object-position: center 14%;
+  filter: grayscale(100%) contrast(0.94) brightness(1.08);
+}
+
+@media (max-width: 1320px) {
+  .workPage.isSplitLayout .workIntro {
+    font-size: clamp(16px, 1.15vw, 19px);
+    max-width: 100%;
+  }
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 56px;
+  gap: 52px;
   align-items: stretch;
 }
 
@@ -80,7 +162,7 @@
 }
 
 .bottomLogos {
-  margin-top: 42px;
+  margin-top: 34px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
@@ -116,9 +198,47 @@
 }
 
 @media (max-width: 1100px) {
+  .workSplit {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .workFeatureImage {
+    margin-top: 4px;
+    justify-self: start;
+    width: min(500px, 100%);
+  }
+
+  .workFeatureImage img {
+    height: auto;
+  }
+
+  .workPage.isSplitLayout .workTitle {
+    font-size: clamp(44px, 9.8vw, 76px);
+    margin-bottom: 18px;
+    white-space: normal;
+    width: auto;
+  }
+
+  .workPage.isSplitLayout .workTitle .twGhost,
+  .workPage.isSplitLayout .workTitle .twText {
+    white-space: pre-line;
+  }
+
+  .workPage.isSplitLayout .workIntro {
+    font-size: clamp(15px, 2.65vw, 20px);
+    max-width: 100%;
+    line-height: 1.4;
+  }
+
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 44px;
+  }
+
+  .workIntro {
+    margin-top: -10px;
+    margin-bottom: 34px;
   }
 
   .cardTitle {
@@ -145,8 +265,31 @@
 }
 
 @media (max-width: 520px) {
+  .workWrap {
+    padding: 34px 16px 84px;
+  }
+
+  .workTitle {
+    font-size: clamp(46px, 12vw, 64px);
+    margin-bottom: 32px;
+  }
+
+  .workPage.isSplitLayout .workTitle {
+    font-size: clamp(38px, 13vw, 54px);
+  }
+
+  .workPage.isSplitLayout .workIntro {
+    font-size: clamp(14px, 4.6vw, 17px);
+    line-height: 1.38;
+  }
+
   .grid {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+
+  .workIntro {
+    font-size: 18px;
+    line-height: 1.58;
   }
 }

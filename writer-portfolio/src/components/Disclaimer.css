@@ -1,8 +1,8 @@
 .disclaimer {
   position: fixed;
   bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
   z-index: 15;
   font-size: 11px;
   letter-spacing: 0.18em;
@@ -11,7 +11,6 @@
   pointer-events: none;
   text-align: center;
   padding: 0 18px;
-  max-width: min(260px, 90vw);
   white-space: nowrap;
 }
 

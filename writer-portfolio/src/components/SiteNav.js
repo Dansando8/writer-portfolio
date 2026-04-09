@@ -1,6 +1,5 @@
 import * as React from "react"
 import { Link } from "gatsby"
-import { navigate } from "gatsby"
 import { useLocation } from "@gatsbyjs/reach-router"
 import "./SiteNav.css"
 
@@ -10,49 +9,101 @@ const defaultLabels = {
   education: "Education"
 }
 
-const languageOptions = [
-  { code: "de", label: "DE", path: "/" },
-  { code: "en", label: "EN", path: "/en" }
-]
-
 const stripTrailingSlash = (value) => {
   if (!value) return value
   return value === "/" ? value : value.replace(/\/$/, "")
 }
 
+const withTrailingSlash = (value) => {
+  const normalized = stripTrailingSlash(value)
+  if (!normalized || normalized === "/") return "/"
+  return `${normalized}/`
+}
+
 export default function SiteNav({
   labels = defaultLabels,
   pathPrefix = "",
-  locale = "en"
+  locale = "en",
+  showEducation = true
 }) {
+  const educationVisible = showEducation && Boolean(labels?.education)
   const { pathname } = useLocation()
   const [open, setOpen] = React.useState(false)
-  const [pendingTo, setPendingTo] = React.useState(null)
 
   const homePath = pathPrefix || "/"
+  const isImproNamespace = homePath.includes("/impro")
+  const isWritingNamespace =
+    homePath.includes("/writing") || homePath.includes("/schreiben")
+  const normalizedPathname = stripTrailingSlash(pathname || "") || "/"
+  const currentSuffix =
+    normalizedPathname
+      .replace(/^\/en/, "")
+      .replace(/^\/(writing|impro|schreiben)/, "") || ""
+
+  // Maps between DE and EN page suffixes for the language switcher
+  const DE_TO_EN = {
+    "/ueber-mich": "/about",
+    "/arbeitsproben": "/work-samples",
+    "/ausbildung": "/education",
+    "/impro-kurse": "/work-samples"
+  }
+  const EN_TO_DE_WRITING = {
+    "/about": "/ueber-mich",
+    "/work-samples": "/arbeitsproben",
+    "/education": "/ausbildung"
+  }
+  const EN_TO_DE_IMPRO = {
+    "/about": "/ueber-mich",
+    "/work-samples": "/impro-kurse"
+  }
+
+  const resolveLocalePath = (targetLocale) => {
+    const localePrefix = targetLocale === "en" ? "/en" : ""
+    const namespacePrefix = isImproNamespace
+      ? "/impro"
+      : isWritingNamespace
+        ? targetLocale === "en" ? "/writing" : "/schreiben"
+        : ""
+    let mappedSuffix = currentSuffix
+    if (targetLocale === "en" && locale === "de") {
+      mappedSuffix = DE_TO_EN[currentSuffix] ?? currentSuffix
+    } else if (targetLocale === "de" && locale === "en") {
+      const map = isImproNamespace ? EN_TO_DE_IMPRO : EN_TO_DE_WRITING
+      mappedSuffix = map[currentSuffix] ?? currentSuffix
+    }
+    const next = `${localePrefix}${namespacePrefix}${mappedSuffix}`
+    return withTrailingSlash(next)
+  }
+  const languageOptions = [
+    { code: "de", label: "DE", path: resolveLocalePath("de") },
+    { code: "en", label: "EN", path: resolveLocalePath("en") }
+  ]
   const normalizedHome = stripTrailingSlash(homePath)
-  const normalizedPathname = stripTrailingSlash(pathname)
   const showBack =
     pathname &&
     normalizedPathname !== normalizedHome &&
     normalizedPathname !== ""
 
-  const resolvePath = (suffix) => `${pathPrefix}${suffix}`
+  const resolvePath = (suffix) => withTrailingSlash(`${pathPrefix}${suffix}`)
   const getTarget = (suffix) => {
     const raw = resolvePath(suffix)
     return { raw, normalized: stripTrailingSlash(raw) }
   }
 
+  const pathSuffixes = labels?.paths || {
+    about: "/about",
+    work: "/work-samples",
+    education: "/education"
+  }
   const targets = {
-    about: getTarget("/about"),
-    work: getTarget("/work-samples"),
-    education: getTarget("/education")
+    about: getTarget(pathSuffixes.about),
+    work: getTarget(pathSuffixes.work),
+    education: getTarget(pathSuffixes.education ?? "/education")
   }
 
   React.useEffect(() => {
     // Close the mobile menu when navigating.
     setOpen(false)
-    setPendingTo(null)
   }, [pathname])
 
   React.useEffect(() => {
@@ -63,32 +114,6 @@ export default function SiteNav({
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [open])
-
-  const ANIM_MS = 420
-
-  const onNavClick = (suffix) => (e) => {
-    if (
-      e.defaultPrevented ||
-      e.button !== 0 ||
-      e.metaKey ||
-      e.altKey ||
-      e.ctrlKey ||
-      e.shiftKey
-    ) {
-      return
-    }
-
-    const { raw: targetPath, normalized: normalizedTarget } = getTarget(suffix)
-
-    if (normalizedPathname === normalizedTarget) return
-
-    e.preventDefault()
-    setPendingTo(normalizedTarget)
-
-    window.setTimeout(() => {
-      navigate(targetPath)
-    }, ANIM_MS)
-  }
 
   return (
     <nav
@@ -121,40 +146,33 @@ export default function SiteNav({
           <ul className="siteNavList">
             <li>
               <Link
-                className={`siteNavLink ${
-                  pendingTo === targets.about.normalized ? "isPending" : ""
-                }`}
+                className="siteNavLink"
                 activeClassName="isActive"
                 to={targets.about.raw}
-                onClick={onNavClick("/about")}
               >
                 {labels.about}
               </Link>
             </li>
             <li>
               <Link
-                className={`siteNavLink ${
-                  pendingTo === targets.work.normalized ? "isPending" : ""
-                }`}
+                className="siteNavLink"
                 activeClassName="isActive"
                 to={targets.work.raw}
-                onClick={onNavClick("/work-samples")}
               >
                 {labels.work}
               </Link>
             </li>
-            <li>
-              <Link
-                className={`siteNavLink ${
-                  pendingTo === targets.education.normalized ? "isPending" : ""
-                }`}
-                activeClassName="isActive"
-                to={targets.education.raw}
-                onClick={onNavClick("/education")}
-              >
-                {labels.education}
-              </Link>
-            </li>
+            {educationVisible ? (
+              <li>
+                <Link
+                  className="siteNavLink"
+                  activeClassName="isActive"
+                  to={targets.education.raw}
+                >
+                  {labels.education}
+                </Link>
+              </li>
+            ) : null}
           </ul>
         </div>
 
