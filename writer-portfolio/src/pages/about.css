@@ -13,7 +13,7 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  filter: grayscale(100%) contrast(1.02) brightness(0.62);
+  filter: grayscale(100%) contrast(1.06) brightness(0.75);
 }
 
 .aboutPageBackdrop::after {
@@ -24,9 +24,9 @@
   pointer-events: none;
   background: linear-gradient(
     90deg,
-    rgba(16, 16, 18, 0.58) 0%,
-    rgba(16, 16, 18, 0.44) 44%,
-    rgba(16, 16, 18, 0.3) 100%
+    rgba(6, 6, 8, 0.90) 0%,
+    rgba(6, 6, 8, 0.60) 40%,
+    rgba(6, 6, 8, 0.22) 100%
   );
 }
 
@@ -228,12 +228,22 @@
     gap: 32px;
   }
 
+  /* Override the higher-specificity DE locale rule so the two-column layout
+     doesn't persist on mobile and clip the text behind overflow:hidden. */
+  .aboutPage[data-locale="de"] .aboutWrap.isBackdrop {
+    grid-template-columns: 1fr;
+  }
+
   .aboutWrap.isBackdrop {
     min-height: auto;
     grid-template-columns: 1fr;
     gap: 24px;
     padding-top: 36px;
     padding-bottom: 86px;
+  }
+
+  .aboutPage[data-locale="de"] .aboutWrap.isBackdrop {
+    grid-template-columns: 1fr;
   }
 
   .aboutWrap.isBackdrop .aboutTitle {

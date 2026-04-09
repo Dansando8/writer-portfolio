@@ -6,6 +6,12 @@
   justify-content: center;
 }
 
+.siteNav.isHidden {
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
 .siteNavGrid {
   width: 100%;
   max-width: 1240px;
