@@ -137,7 +137,7 @@
 
 .aboutWrap.isBackdrop .aboutText {
   color: rgba(255, 255, 255, 0.95);
-  font-size: clamp(15px, 1.03vw, 20px);
+  font-size: clamp(17px, 1.3vw, 22px);
   line-height: 1.4;
   max-width: 62ch;
   width: 100%;
@@ -168,7 +168,7 @@
   }
 
   .aboutWrap.isBackdrop .aboutText {
-    font-size: clamp(14px, 1vw, 17px);
+    font-size: clamp(16px, 1.2vw, 20px);
     line-height: 1.4;
     max-width: 58ch;
     width: 100%;
@@ -261,7 +261,7 @@
   }
 
   .aboutWrap.isBackdrop .aboutText {
-    font-size: clamp(14px, 2.8vw, 19px);
+    font-size: clamp(15px, 2.8vw, 20px);
     line-height: 1.38;
     max-width: 100%;
     margin-top: 2px;

@@ -252,6 +252,12 @@
   line-height: 0.95;
 }
 
+/* "Improvisationstheater" is one long word — calibrate so it fills the viewport
+   without overflowing the hero at any desktop size. */
+.hero[data-locale="de"][data-variant="impro"] .name {
+  font-size: clamp(24px, 7.5vw, 108px);
+}
+
 .tagline {
   margin: 22px 0 0;
   display: inline-block;
@@ -302,6 +308,11 @@
   .name {
     font-size: 76px;
     line-height: 0.92;
+  }
+
+  /* keep the clamp active for the long impro title instead of the fixed 76px */
+  .hero[data-locale="de"][data-variant="impro"] .name {
+    font-size: clamp(24px, 7.5vw, 108px);
   }
 
   .heroTopBlur {

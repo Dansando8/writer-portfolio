@@ -59,8 +59,8 @@
 .workPage.isSplitLayout .workIntro {
   margin: 0;
   max-width: 100%;
-  font-size: clamp(14px, 0.98vw, 18px);
-  line-height: 1.36;
+  font-size: clamp(16px, 1.2vw, 20px);
+  line-height: 1.4;
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -96,7 +96,7 @@
 
 @media (max-width: 1320px) {
   .workPage.isSplitLayout .workIntro {
-    font-size: clamp(14px, 0.96vw, 17px);
+    font-size: clamp(16px, 1.15vw, 19px);
     max-width: 100%;
   }
 }
@@ -226,7 +226,7 @@
   }
 
   .workPage.isSplitLayout .workIntro {
-    font-size: clamp(14px, 2.65vw, 18px);
+    font-size: clamp(15px, 2.65vw, 20px);
     max-width: 100%;
     line-height: 1.4;
   }
@@ -279,7 +279,7 @@
   }
 
   .workPage.isSplitLayout .workIntro {
-    font-size: clamp(13px, 4.6vw, 16px);
+    font-size: clamp(14px, 4.6vw, 17px);
     line-height: 1.38;
   }
 

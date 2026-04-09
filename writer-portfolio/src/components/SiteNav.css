@@ -209,6 +209,44 @@
   }
 }
 
+/* ── Impro variant: both nav links always rendered as pill buttons ── */
+[data-variant="impro"] .siteNavLink {
+  background: var(--pill-bg);
+  color: var(--brand-lilac);
+  border-radius: 8px;
+  padding: 7px 16px;
+}
+
+/* suppress the yellow-sweep ::after animation */
+[data-variant="impro"] .siteNavLink::after {
+  display: none;
+}
+
+/* active link: yellow fill */
+[data-variant="impro"] .siteNavLink.isActive {
+  background: var(--brand-yellow);
+  color: rgba(20, 20, 22, 0.96);
+}
+
+/* hover on inactive: slightly brighter purple */
+[data-variant="impro"] .siteNavLink:hover:not(.isActive),
+[data-variant="impro"] .siteNavLink:focus-visible:not(.isActive) {
+  background: rgba(52, 4, 78, 0.92);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* keep yellow-bg active text dark even when a sibling is hovered */
+@supports selector(.siteNavList:has(.siteNavLink:hover)) {
+  [data-variant="impro"]
+    .siteNavList:has(.siteNavLink:hover:not(.isActive))
+    .siteNavLink.isActive,
+  [data-variant="impro"]
+    .siteNavList:has(.siteNavLink:focus-visible:not(.isActive))
+    .siteNavLink.isActive {
+    color: rgba(20, 20, 22, 0.96);
+  }
+}
+
 @media (max-width: 560px) {
   .siteNav {
     padding: 18px 16px 0;

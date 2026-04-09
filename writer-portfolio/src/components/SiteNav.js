@@ -86,6 +86,7 @@ export default function SiteNav({
   return (
     <nav
       className={`siteNav ${open ? "isMenuOpen" : ""}`}
+      data-variant={isImproNamespace ? "impro" : "writing"}
       aria-label="Primary"
     >
       {open ? (

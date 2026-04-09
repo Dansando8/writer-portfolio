@@ -145,6 +145,7 @@ export function LandingContent({ translation, forcedVariant }) {
       className="hero"
       lang={translation.meta.locale === "en" ? "en" : "de"}
       data-locale={translation.meta.locale === "en" ? "en" : "de"}
+      data-variant={portfolioVariant}
     >
       {!ready ? (
         <div className="loaderOverlay" role="status" aria-live="polite">

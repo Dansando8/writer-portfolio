@@ -153,7 +153,7 @@ const improByLocale = {
       education: ""
     },
     hero: {
-      title: "Impro Theater",
+      title: "Improvisationstheater",
       taglineLines: ["Teambuilding, Perspektivwechsel", "& Spontanität"]
     },
     contact: {
