@@ -17,7 +17,7 @@ import { resolvePortfolioContent } from "../data/portfolioContent"
 import "../pages/index.css"
 
 const DEFAULT_LOADER_DELAY_MS = 2500
-const ENTERED_STORAGE_KEY = "portfolioAudioEntered"
+const ENTERED_RUNTIME_KEY = "__portfolioAudioEntered"
 
 const getLoaderDelay = () => {
   if (typeof window === "undefined") return DEFAULT_LOADER_DELAY_MS
@@ -30,20 +30,13 @@ const isLoaderDebug = () => getLoaderDelay() === 120000
 
 const readEnteredState = () => {
   if (typeof window === "undefined") return false
+  if (window[ENTERED_RUNTIME_KEY] === true) return true
   try {
-    return window.sessionStorage.getItem(ENTERED_STORAGE_KEY) === "1"
+    window.sessionStorage.removeItem("portfolioAudioEntered")
   } catch {
-    return false
+    // Ignore stale storage cleanup failures.
   }
-}
-
-const persistEnteredState = () => {
-  if (typeof window === "undefined") return
-  try {
-    window.sessionStorage.setItem(ENTERED_STORAGE_KEY, "1")
-  } catch {
-    // Ignore storage failures.
-  }
+  return false
 }
 
 const HOME_PATHS = {
@@ -113,11 +106,6 @@ export function LandingContent({ translation, forcedVariant }) {
   }, [imgLoaded])
 
   React.useEffect(() => {
-    if (!entered) return
-    persistEnteredState()
-  }, [entered])
-
-  React.useEffect(() => {
     if (!ready || !entered) setTitleDone(false)
   }, [ready, entered])
 
@@ -181,6 +169,9 @@ export function LandingContent({ translation, forcedVariant }) {
               onClick={() => {
                 if (enterDissolving) return
                 requestTypewriterAudioUnlock()
+                if (typeof window !== "undefined") {
+                  window[ENTERED_RUNTIME_KEY] = true
+                }
                 setEntered(true)
                 setEnterDissolving(true)
                 window.setTimeout(() => setEnterDissolving(false), 420)

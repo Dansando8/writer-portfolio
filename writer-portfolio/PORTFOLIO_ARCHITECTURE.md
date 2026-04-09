@@ -1,38 +1,54 @@
 # Portfolio Variant Architecture
 
 ## Goal
-Keep one shared site UI and routing, while serving two content variants:
+Keep one shared component system while serving two content variants:
 - `writing` (existing content, kept as canonical baseline)
 - `impro` (new Impro Theater content)
 
-The site remains bilingual (`de`, `en`) and supports both languages for both portfolio variants.
+The site is bilingual (`de`, `en`) and supports both languages for both variants.
 
 ## Non-overwrite Rule
 Do not overwrite the original writing content directly in page components.
-All variant-specific changes must be made in the central content registry:
+Variant-specific copy and structure live in the central content registry:
 - `src/data/portfolioContent.js`
 
-The writing variant should stay structurally compatible with the existing translation JSON files.
+Writing content remains compatible with `src/data/translations/*.json`.
 
-## Runtime Selection
-Portfolio variant is selected at runtime and persisted in `localStorage`:
-- key: `portfolioVariant`
-- allowed values: `writing`, `impro`
+## Route Model (Current)
+Variant is route-driven, not shared-route toggle driven.
 
-Selection can also be initialized from URL query string on entry:
-- `?portfolio=writing`
-- `?portfolio=impro`
+Writing namespace:
+- `/writing`
+- `/writing/about`
+- `/writing/work-samples`
+- `/writing/education`
+- `/en/writing`
+- `/en/writing/about`
+- `/en/writing/work-samples`
+- `/en/writing/education`
 
-## Shared UI Contract
-The following pages keep one shared layout/UI and only swap content:
-- Landing (`/`, `/en`)
-- About (`/about`, `/en/about`)
-- Work Samples (`/work-samples`, `/en/work-samples`)
-- Education (`/education`, `/en/education`)
+Impro namespace:
+- `/impro`
+- `/impro/about`
+- `/impro/work-samples`
+- `/en/impro`
+- `/en/impro/about`
+- `/en/impro/work-samples`
 
-## Root Toggle Contract
-A toggle on the landing page selects the active portfolio variant.
-After selection, navigation keeps the same variant across pages in the same browser.
+Legacy top-level routes redirect to writing namespace:
+- `/` -> `/writing`
+- `/about` -> `/writing/about`
+- `/work-samples` -> `/writing/work-samples`
+- `/education` -> `/writing/education`
+- and `/en/*` equivalents.
+
+## Navigation Contract
+- `SiteNav` receives `pathPrefix` from `content.meta.basePath`.
+- Menu links are generated as `${pathPrefix}/about|work-samples|education`.
+- Language switch keeps current page suffix and swaps only locale prefix:
+  - example: `/en/impro/work-samples/` -> `/impro/work-samples/`
+  - example: `/writing/about/` -> `/en/writing/about/`
+- Keep trailing slashes on generated nav targets (current implementation in `SiteNav.js`).
 
 ## Translation Contract
 All variant labels and copy are localized in the content registry, including:
@@ -41,6 +57,27 @@ All variant labels and copy are localized in the content registry, including:
 - about/work/education sections
 - contact/disclaimer
 - portfolio toggle labels
+
+## Landing Contract
+- Landing component is shared.
+- Writing and impro use different hero media.
+- Toggle on landing changes route namespace (`writing` <-> `impro`), not just local state.
+- Keep contact badge, toggle, and disclaimer visible on landing unless explicitly changed.
+
+## Visual Lock Notes (From Mock Alignment)
+These are intentional and should not be casually reverted:
+- Writing about page uses fixed desktop two-column composition matched to PDF mock.
+- Impro about page uses backdrop layout with boxed inline paragraph backgrounds.
+- Impro work page uses split layout with right feature image and widened left text flow.
+- Education title sizing differs by locale to prevent overlap (DE has stricter cap).
+
+## Safe Edit Checklist
+Before changing routing/nav/layout:
+1. Confirm both namespaces (`writing`, `impro`) in both locales still resolve.
+2. Verify language switch keeps current page path.
+3. Verify menu tabs point to the active namespace.
+4. Verify no visual regressions against PDF mock pages.
+5. Keep changes scoped (writing-only vs impro-only) in CSS selectors.
 
 ## Extending Content Safely
 To add or edit a variant:
