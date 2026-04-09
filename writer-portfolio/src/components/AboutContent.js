@@ -49,7 +49,7 @@ export function AboutContent({ translation, forcedVariant }) {
           />
         </div>
 
-        <div className={`aboutText reveal ${(titleDone || isBackdropLayout) ? "isVisible" : ""}`}>
+        <div className={`aboutText reveal ${titleDone ? "isVisible" : ""}`}>
           {content.about.paragraphs.map((paragraph, pIdx) => (
             <div key={pIdx} className="aboutParagraph">
               <p>
