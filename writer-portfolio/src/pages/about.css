@@ -198,9 +198,15 @@
   filter: grayscale(100%) contrast(0.85) brightness(1.35);
 }
 
-@media (max-width: 980px) {
-  .aboutWrap {
+/* Non-backdrop needs to stack earlier: minmax(620,…)+minmax(330,…)+44gap = 994px min,
+   which overflows at viewports below ~1042px (e.g. iPad landscape 1024px). */
+@media (max-width: 1060px) {
+  .aboutWrap:not(.isBackdrop) {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "text"
+      "image";
     gap: 32px;
   }
 
@@ -214,13 +220,12 @@
   .aboutWrap:not(.isBackdrop) .rightImage img {
     height: auto;
   }
+}
 
-  .aboutWrap:not(.isBackdrop) {
+@media (max-width: 980px) {
+  .aboutWrap {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "title"
-      "text"
-      "image";
+    gap: 32px;
   }
 
   .aboutWrap.isBackdrop {

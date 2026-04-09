@@ -100,3 +100,9 @@
     gap: 36px;
   }
 }
+
+@media (max-width: 560px) {
+  .educationWrap {
+    padding: 34px 16px 48px;
+  }
+}

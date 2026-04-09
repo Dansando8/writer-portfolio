@@ -269,6 +269,11 @@
     padding: 34px 16px 84px;
   }
 
+  .workTitle {
+    font-size: clamp(46px, 12vw, 64px);
+    margin-bottom: 32px;
+  }
+
   .workPage.isSplitLayout .workTitle {
     font-size: clamp(38px, 13vw, 54px);
   }
