@@ -24,7 +24,8 @@ export default function SiteNav({
   labels = defaultLabels,
   pathPrefix = "",
   locale = "en",
-  showEducation = true
+  showEducation = true,
+  className = ""
 }) {
   const educationVisible = showEducation && Boolean(labels?.education)
   const { pathname } = useLocation()
@@ -117,7 +118,7 @@ export default function SiteNav({
 
   return (
     <nav
-      className={`siteNav ${open ? "isMenuOpen" : ""}`}
+      className={`siteNav ${open ? "isMenuOpen" : ""} ${className}`.trim()}
       aria-label="Primary"
     >
       {open ? (

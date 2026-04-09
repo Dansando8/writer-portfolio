@@ -210,14 +210,13 @@ export function LandingContent({ translation, forcedVariant }) {
       <div className="heroTopBlur" aria-hidden="true" />
       <div className="heroShade" />
 
-      {contentVisible ? (
-        <SiteNav
-          labels={content.nav}
-          pathPrefix={content.meta.basePath}
-          locale={content.meta.locale}
-          showEducation={Boolean(content.nav?.education)}
-        />
-      ) : null}
+      <SiteNav
+        labels={content.nav}
+        pathPrefix={content.meta.basePath}
+        locale={content.meta.locale}
+        showEducation={Boolean(content.nav?.education)}
+        className={contentVisible ? "" : "isHidden"}
+      />
 
       <section className="content">
         <div className="headlineBlock">
