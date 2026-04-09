@@ -1,11 +1,11 @@
 import * as React from "react"
-import { AboutContent, AboutHead } from "../../components/AboutContent"
-import deTranslation from "../../data/translations/de.json"
+import { navigate } from "gatsby"
 
-export default function WritingAboutPage() {
-  return <AboutContent translation={deTranslation} forcedVariant="writing" />
+export default function WritingAboutRedirectPage() {
+  React.useEffect(() => {
+    navigate("/schreiben/ueber-mich", { replace: true })
+  }, [])
+  return null
 }
 
-export const Head = () => (
-  <AboutHead translation={deTranslation} forcedVariant="writing" />
-)
+export const Head = () => <title>Amonat</title>

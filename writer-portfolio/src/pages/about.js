@@ -3,7 +3,7 @@ import { navigate } from "gatsby"
 
 export default function AboutRedirectPage() {
   React.useEffect(() => {
-    navigate("/writing/about", { replace: true })
+    navigate("/schreiben/ueber-mich", { replace: true })
   }, [])
   return null
 }

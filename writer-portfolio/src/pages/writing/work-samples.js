@@ -1,14 +1,11 @@
 import * as React from "react"
-import {
-  WorkSamplesContent,
-  WorkSamplesHead
-} from "../../components/WorkSamplesContent"
-import deTranslation from "../../data/translations/de.json"
+import { navigate } from "gatsby"
 
-export default function WritingWorkSamplesPage() {
-  return <WorkSamplesContent translation={deTranslation} forcedVariant="writing" />
+export default function WritingWorkSamplesRedirectPage() {
+  React.useEffect(() => {
+    navigate("/schreiben/arbeitsproben", { replace: true })
+  }, [])
+  return null
 }
 
-export const Head = () => (
-  <WorkSamplesHead translation={deTranslation} forcedVariant="writing" />
-)
+export const Head = () => <title>Amonat</title>

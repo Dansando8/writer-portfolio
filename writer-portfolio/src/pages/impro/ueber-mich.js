@@ -1,0 +1,11 @@
+import * as React from "react"
+import { AboutContent, AboutHead } from "../../components/AboutContent"
+import deTranslation from "../../data/translations/de.json"
+
+export default function ImproUeberMichPage() {
+  return <AboutContent translation={deTranslation} forcedVariant="impro" />
+}
+
+export const Head = () => (
+  <AboutHead translation={deTranslation} forcedVariant="impro" />
+)

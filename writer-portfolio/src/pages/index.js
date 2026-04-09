@@ -3,7 +3,7 @@ import { navigate } from "gatsby"
 
 export default function IndexRedirectPage() {
   React.useEffect(() => {
-    navigate("/writing", { replace: true })
+    navigate("/schreiben", { replace: true })
   }, [])
   return null
 }

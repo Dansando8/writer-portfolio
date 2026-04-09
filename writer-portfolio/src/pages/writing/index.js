@@ -1,11 +1,11 @@
 import * as React from "react"
-import { LandingContent, LandingHead } from "../../components/LandingContent"
-import deTranslation from "../../data/translations/de.json"
+import { navigate } from "gatsby"
 
-export default function WritingIndexPage() {
-  return <LandingContent translation={deTranslation} forcedVariant="writing" />
+export default function WritingRedirectPage() {
+  React.useEffect(() => {
+    navigate("/schreiben", { replace: true })
+  }, [])
+  return null
 }
 
-export const Head = () => (
-  <LandingHead translation={deTranslation} forcedVariant="writing" />
-)
+export const Head = () => <title>Amonat</title>

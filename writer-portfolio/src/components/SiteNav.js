@@ -32,19 +32,46 @@ export default function SiteNav({
 
   const homePath = pathPrefix || "/"
   const isImproNamespace = homePath.includes("/impro")
-  const isWritingNamespace = homePath.includes("/writing")
+  const isWritingNamespace =
+    homePath.includes("/writing") || homePath.includes("/schreiben")
   const normalizedPathname = stripTrailingSlash(pathname || "") || "/"
-  const currentSuffix = normalizedPathname
-    .replace(/^\/en/, "")
-    .replace(/^\/(writing|impro)/, "") || ""
+  const currentSuffix =
+    normalizedPathname
+      .replace(/^\/en/, "")
+      .replace(/^\/(writing|impro|schreiben)/, "") || ""
+
+  // Maps between DE and EN page suffixes for the language switcher
+  const DE_TO_EN = {
+    "/ueber-mich": "/about",
+    "/arbeitsproben": "/work-samples",
+    "/ausbildung": "/education",
+    "/impro-kurse": "/work-samples"
+  }
+  const EN_TO_DE_WRITING = {
+    "/about": "/ueber-mich",
+    "/work-samples": "/arbeitsproben",
+    "/education": "/ausbildung"
+  }
+  const EN_TO_DE_IMPRO = {
+    "/about": "/ueber-mich",
+    "/work-samples": "/impro-kurse"
+  }
+
   const resolveLocalePath = (targetLocale) => {
     const localePrefix = targetLocale === "en" ? "/en" : ""
     const namespacePrefix = isImproNamespace
       ? "/impro"
       : isWritingNamespace
-        ? "/writing"
+        ? targetLocale === "en" ? "/writing" : "/schreiben"
         : ""
-    const next = `${localePrefix}${namespacePrefix}${currentSuffix}`
+    let mappedSuffix = currentSuffix
+    if (targetLocale === "en" && locale === "de") {
+      mappedSuffix = DE_TO_EN[currentSuffix] ?? currentSuffix
+    } else if (targetLocale === "de" && locale === "en") {
+      const map = isImproNamespace ? EN_TO_DE_IMPRO : EN_TO_DE_WRITING
+      mappedSuffix = map[currentSuffix] ?? currentSuffix
+    }
+    const next = `${localePrefix}${namespacePrefix}${mappedSuffix}`
     return withTrailingSlash(next)
   }
   const languageOptions = [
@@ -63,10 +90,15 @@ export default function SiteNav({
     return { raw, normalized: stripTrailingSlash(raw) }
   }
 
+  const pathSuffixes = labels?.paths || {
+    about: "/about",
+    work: "/work-samples",
+    education: "/education"
+  }
   const targets = {
-    about: getTarget("/about"),
-    work: getTarget("/work-samples"),
-    education: getTarget("/education")
+    about: getTarget(pathSuffixes.about),
+    work: getTarget(pathSuffixes.work),
+    education: getTarget(pathSuffixes.education ?? "/education")
   }
 
   React.useEffect(() => {

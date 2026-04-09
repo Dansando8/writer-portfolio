@@ -1,11 +1,11 @@
 import * as React from "react"
-import { AboutContent, AboutHead } from "../../components/AboutContent"
-import deTranslation from "../../data/translations/de.json"
+import { navigate } from "gatsby"
 
-export default function ImproAboutPage() {
-  return <AboutContent translation={deTranslation} forcedVariant="impro" />
+export default function ImproAboutRedirectPage() {
+  React.useEffect(() => {
+    navigate("/impro/ueber-mich", { replace: true })
+  }, [])
+  return null
 }
 
-export const Head = () => (
-  <AboutHead translation={deTranslation} forcedVariant="impro" />
-)
+export const Head = () => <title>Amonat</title>

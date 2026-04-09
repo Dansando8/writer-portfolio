@@ -150,7 +150,8 @@ const improByLocale = {
     nav: {
       about: "Über mich",
       work: "Impro Kurse",
-      education: ""
+      education: "",
+      paths: { about: "/ueber-mich", work: "/impro-kurse" }
     },
     hero: {
       title: "Improvisationstheater",
@@ -312,7 +313,8 @@ const improByLocale = {
     nav: {
       about: "About Me",
       work: "Impro Classes",
-      education: ""
+      education: "",
+      paths: { about: "/about", work: "/work-samples" }
     },
     hero: {
       title: "Improvisational Theater",
@@ -469,8 +471,12 @@ const writingByLocale = {
     ...deBase,
     meta: {
       ...deBase.meta,
-      basePath: "/writing",
+      basePath: "/schreiben",
       locale: "de"
+    },
+    nav: {
+      ...deBase.nav,
+      paths: { about: "/ueber-mich", work: "/arbeitsproben", education: "/ausbildung" }
     },
     about: {
       ...deBase.about,
@@ -492,6 +498,10 @@ const writingByLocale = {
       ...enBase.meta,
       basePath: "/en/writing",
       locale: "en"
+    },
+    nav: {
+      ...enBase.nav,
+      paths: { about: "/about", work: "/work-samples", education: "/education" }
     },
     about: {
       ...enBase.about,
