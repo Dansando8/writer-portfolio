@@ -59,6 +59,7 @@ export function WorkSamplesContent({ translation, forcedVariant }) {
                 as="h1"
                 className="workTitle"
                 text={content.work.title}
+                onStart={() => setTitleDone(false)}
                 onDone={() => setTitleDone(true)}
               />
               <div className={`workIntro reveal ${titleDone ? "isVisible" : ""}`}>
@@ -85,6 +86,7 @@ export function WorkSamplesContent({ translation, forcedVariant }) {
               as="h1"
               className="workTitle"
               text={content.work.title}
+              onStart={() => setTitleDone(false)}
               onDone={() => setTitleDone(true)}
             />
 

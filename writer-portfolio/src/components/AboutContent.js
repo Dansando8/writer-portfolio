@@ -45,6 +45,7 @@ export function AboutContent({ translation, forcedVariant }) {
             as="h1"
             className="aboutTitle"
             text={content.about.title}
+            onStart={() => setTitleDone(false)}
             onDone={() => setTitleDone(true)}
           />
         </div>
