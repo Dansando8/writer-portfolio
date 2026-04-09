@@ -102,7 +102,7 @@ function playKeystrokeSound(char, prevChar, index) {
   const outputGain = ctx.createGain()
   outputGain.gain.setValueAtTime(0.0001, now)
   outputGain.gain.exponentialRampToValueAtTime(
-    (0.182 + (variationSeed % 6) * 0.013) * weight,
+    (0.22 + (variationSeed % 6) * 0.016) * weight,
     now + attack
   )
   outputGain.gain.exponentialRampToValueAtTime(0.0001, now + ringDecay)
@@ -124,7 +124,7 @@ function playKeystrokeSound(char, prevChar, index) {
   const clickGain = ctx.createGain()
   clickGain.gain.setValueAtTime(0.0001, now)
   clickGain.gain.exponentialRampToValueAtTime(
-    (isSpace ? 0.19 : 0.43) + (variationSeed % 4) * 0.03,
+    (isSpace ? 0.23 : 0.54) + (variationSeed % 4) * 0.04,
     now + 0.0016
   )
   clickGain.gain.exponentialRampToValueAtTime(0.0001, now + clickDecay)
@@ -144,7 +144,7 @@ function playKeystrokeSound(char, prevChar, index) {
   const ringGain = ctx.createGain()
   ringGain.gain.setValueAtTime(0.0001, now)
   ringGain.gain.exponentialRampToValueAtTime(
-    (isSpace ? 0.019 : 0.062) + (variationSeed % 3) * 0.0065,
+    (isSpace ? 0.026 : 0.082) + (variationSeed % 3) * 0.008,
     now + 0.005
   )
   ringGain.gain.exponentialRampToValueAtTime(0.0001, now + ringDecay)
@@ -159,7 +159,7 @@ function playKeystrokeSound(char, prevChar, index) {
   const noiseGain = ctx.createGain()
   noiseGain.gain.setValueAtTime(0.0001, now)
   noiseGain.gain.exponentialRampToValueAtTime(
-    (isSpace ? 0.008 : 0.024) + (variationSeed % 5) * 0.0022,
+    (isSpace ? 0.012 : 0.034) + (variationSeed % 5) * 0.0032,
     now + 0.0012
   )
   noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + clickDecay)
