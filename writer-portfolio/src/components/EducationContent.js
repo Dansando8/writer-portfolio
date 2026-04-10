@@ -44,6 +44,7 @@ export function EducationContent({ translation, forcedVariant }) {
             as="h1"
             className="eduTitle"
             text={content.education.title}
+            onStart={() => setTitleDone(false)}
             onDone={() => setTitleDone(true)}
           />
 

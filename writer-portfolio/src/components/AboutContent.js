@@ -45,11 +45,12 @@ export function AboutContent({ translation, forcedVariant }) {
             as="h1"
             className="aboutTitle"
             text={content.about.title}
+            onStart={() => setTitleDone(false)}
             onDone={() => setTitleDone(true)}
           />
         </div>
 
-        <div className={`aboutText reveal ${(titleDone || isBackdropLayout) ? "isVisible" : ""}`}>
+        <div className={`aboutText reveal ${titleDone ? "isVisible" : ""}`}>
           {content.about.paragraphs.map((paragraph, pIdx) => (
             <div key={pIdx} className="aboutParagraph">
               <p>

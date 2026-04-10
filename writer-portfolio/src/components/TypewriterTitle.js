@@ -351,18 +351,24 @@ export default function TypewriterTitle({
   text,
   className = "",
   startDelayMs = 180,
-  onDone
+  onDone,
+  onStart
 }) {
   const prefersReducedMotion = usePrefersReducedMotion()
   const audioReady = useAudioUnlock()
   const [shown, setShown] = React.useState("")
   const [replayKey, setReplayKey] = React.useState(0)
   const onDoneRef = React.useRef(onDone)
+  const onStartRef = React.useRef(onStart)
   const hasRestartedForAudioRef = React.useRef(false)
 
   React.useEffect(() => {
     onDoneRef.current = onDone
   }, [onDone])
+
+  React.useEffect(() => {
+    onStartRef.current = onStart
+  }, [onStart])
 
   React.useEffect(() => {
     if (!audioReady) return
@@ -387,6 +393,7 @@ export default function TypewriterTitle({
     const rnd = mulberry32(seed || 1)
 
     setShown("")
+    onStartRef.current?.()
     const chars = Array.from(text)
     for (let i = 0; i < chars.length; i++) {
       const ch = chars[i]
