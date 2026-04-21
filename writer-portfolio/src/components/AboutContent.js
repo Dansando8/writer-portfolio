@@ -51,21 +51,31 @@ export function AboutContent({ translation, forcedVariant }) {
         </div>
 
         <div className={`aboutText reveal ${titleDone ? "isVisible" : ""}`}>
-          {content.about.paragraphs.map((paragraph, pIdx) => (
-            <div key={pIdx} className="aboutParagraph">
-              <p>
-                {paragraph.map((segment, sIdx) =>
-                  segment.highlight ? (
-                    <span key={sIdx} className="hi">
-                      {segment.text}
-                    </span>
-                  ) : (
-                    <React.Fragment key={sIdx}>{segment.text}</React.Fragment>
-                  )
-                )}
-              </p>
-            </div>
-          ))}
+          {content.about.paragraphs.map((paragraph, pIdx) => {
+            if (paragraph[0]?.subheading) {
+              return (
+                <div key={pIdx} className="aboutSubheadingWrap">
+                  <h3 className="aboutSubheading">{paragraph[0].text}</h3>
+                </div>
+              )
+            }
+            const isSmall = paragraph[0]?.small
+            return (
+              <div key={pIdx} className={`aboutParagraph${isSmall ? " aboutParagraphSmall" : ""}`}>
+                <p>
+                  {paragraph.map((segment, sIdx) =>
+                    segment.highlight ? (
+                      <span key={sIdx} className="hi">
+                        {segment.text}
+                      </span>
+                    ) : (
+                      <React.Fragment key={sIdx}>{segment.text}</React.Fragment>
+                    )
+                  )}
+                </p>
+              </div>
+            )
+          })}
         </div>
 
         {!isBackdropLayout ? (

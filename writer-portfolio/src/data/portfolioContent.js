@@ -219,6 +219,26 @@ const improByLocale = {
             text: ".",
             highlight: false
           }
+        ],
+        [
+          {
+            text: "Random Facts",
+            subheading: true
+          }
+        ],
+        [
+          {
+            text: "Geboren am Ende der Millennial Ära, also eine Mischmeldung aus Walkman und Smartphone.",
+            highlight: false,
+            small: true
+          }
+        ],
+        [
+          {
+            text: "Lieblingsfilme: Triangle of Sadness, Birdman, Promising Young Woman",
+            highlight: false,
+            small: true
+          }
         ]
       ]
     },
@@ -381,6 +401,26 @@ const improByLocale = {
           {
             text: ".",
             highlight: false
+          }
+        ],
+        [
+          {
+            text: "Random Facts",
+            subheading: true
+          }
+        ],
+        [
+          {
+            text: "Born at the end of the Millennial era, so a mix of Walkman & Smartphone.",
+            highlight: false,
+            small: true
+          }
+        ],
+        [
+          {
+            text: "Favourite Movies: Triangle of Sadness, Birdman, Promising Young Woman",
+            highlight: false,
+            small: true
           }
         ]
       ]
