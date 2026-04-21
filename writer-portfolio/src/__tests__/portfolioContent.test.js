@@ -137,9 +137,9 @@ describe("resolvePortfolioContent", () => {
       expect(content.about.title.length).toBeGreaterThan(0)
     })
 
-    test("about.paragraphs has 3 items (impro DE)", () => {
+    test("about.paragraphs has 6 items (impro DE)", () => {
       assertParagraphs(content.about.paragraphs, "DE impro about")
-      expect(content.about.paragraphs.length).toBe(3)
+      expect(content.about.paragraphs.length).toBe(6)
     })
 
     test("work.title is non-empty", () => {
@@ -291,9 +291,9 @@ describe("resolvePortfolioContent", () => {
       expect(content.about.title.length).toBeGreaterThan(0)
     })
 
-    test("about.paragraphs has 3 items (impro EN)", () => {
+    test("about.paragraphs has 6 items (impro EN)", () => {
       assertParagraphs(content.about.paragraphs, "EN impro about")
-      expect(content.about.paragraphs.length).toBe(3)
+      expect(content.about.paragraphs.length).toBe(6)
     })
 
     test("work.title is non-empty", () => {
